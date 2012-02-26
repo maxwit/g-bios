@@ -1,0 +1,8 @@
+include/autoconf.h
+.config
+witrom.*
+*.o
+*.dis
+*.elf
+*.pdf
+*.pyc
