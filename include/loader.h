@@ -17,20 +17,11 @@ struct loader_opt {
 	int  load_flash; // fixme
 	int  load_size;
 	const char *prompt;
-#ifdef CONFIG_GTH
 	char ckey[2];
 	int (*main)(struct loader_opt *opt);
-#else
-	char file_name[FILE_NAME_SIZE];
-	const char *dst;
-#endif
 };
 
 // DO NOT add "static" here
-#ifdef CONFIG_GTH
 #define REGISTER_LOADER(key, routine, str) \
 	const __USED__ __GBIOS_LOADER__ struct loader_opt __gbios_loader_##key = \
 		{.ckey = #key, .main = routine, .prompt = str}
-#else
-#define REGISTER_LOADER(key, routine, str)
-#endif

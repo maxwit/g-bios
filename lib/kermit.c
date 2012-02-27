@@ -61,16 +61,7 @@ int kermit_load(struct loader_opt *opt)
 	int type = KERM_TYPE_BREAK; // fixme
 	__u8 *curr_addr = (__u8 *)opt->load_addr;
 
-#ifndef CONFIG_GTH
-	if (!opt->load_addr) {
-		__u8 data[KERM_BUF_LEN];
-		curr_addr = data;
-		printf("curr_addr = %p\n",data);
-	} else
-#endif
-	{
-		curr_addr = opt->load_addr;
-	}
+	curr_addr = opt->load_addr;
 	opt->load_size = 0;
 
 	do {
@@ -153,15 +144,7 @@ int kermit_load(struct loader_opt *opt)
 		if (curr_char != KERM_KEY_TERM)
 			goto error;
 
-#ifndef CONFIG_GTH
-		part_write(opt->part, curr_addr, count);
-
-		if (opt->load_addr)
-#endif
-		{
-			curr_addr += count;
-		}
-
+		curr_addr += count;
 		opt->load_size += count;
 
 		/* send ack package */

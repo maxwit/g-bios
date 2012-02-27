@@ -7,7 +7,7 @@
 	.global _start
 	.global hang
 
-#ifdef CONFIG_OMAP3
+#if defined(CONFIG_OMAP3) || defined(CONFIG_OMAP4)
 	.word (_end - _start)
 	.word _start
 #endif
@@ -57,11 +57,11 @@ handle_reset:
 	ldrh r1, [r0, #WTCON]
 	bic r1, #0xff
 	strh r1, [r0, #WTCON]
-#endif
-
-#ifdef CONFIG_OMAP3
+#elif defined(CONFIG_OMAP3)
 	mov r12, #0x1		@ to invalidate L2
 	.word 0xE1600070	@ Call SMI monitor
+#elif defined(CONFIG_OMAP3)
+	ldr sp, =(OMAP4_SRAM_BASE + OMAP4_SRAM_SIZE)
 #endif
 
 	bl   cpu_init

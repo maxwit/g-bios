@@ -66,7 +66,6 @@ soc_init:
 
 	bx   lr
 
-#ifdef CONFIG_GTH
 udelay:
 	ldr r1, =(ACLK_RATE >> 20) >> 5
 	mul r1, r0, r1
@@ -75,5 +74,3 @@ udelay:
 	bgt  0b
 
 	bx  lr
-#endif
-

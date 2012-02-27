@@ -14,7 +14,7 @@ LD = $(CROSS_COMPILE)ld
 OBJDUMP = $(CROSS_COMPILE)objdump
 OBJCOPY = $(CROSS_COMPILE)objcopy
 
-CFLAGS = -ffreestanding -nostdinc -nostdlib -fno-builtin -I$(TOP_DIR)/include -include witrom.h -D__WITROM_VER__=\"$(MAJOR_VER).$(MINOR_VER)\" -D__LITTLE_ENDIAN -O2 -Wall -Werror -mno-thumb-interwork -march=$(CONFIG_ARCH_VER) -mabi=aapcs-linux -mpoke-function-name -DCONFIG_GTH
+CFLAGS = -ffreestanding -nostdinc -nostdlib -fno-builtin -I$(TOP_DIR)/include -include witrom.h -D__WITROM_VER__=\"$(MAJOR_VER).$(MINOR_VER)\" -D__LITTLE_ENDIAN -O2 -Wall -Werror -mno-thumb-interwork -march=$(CONFIG_ARCH_VER) -mabi=aapcs-linux
 
 #ifeq ($(CONFIG_DEBUG),y)
 #	CFLAGS += -DCONFIG_DEBUG
@@ -43,8 +43,8 @@ dir-y := arch/$(CONFIG_ARCH) core driver lib
 
 subdir-objs := $(foreach n, $(dir-y), $(n)/$(builtin-obj))
 
-#all: include/autoconf.h $(dir-y) witrom.bin witrom.dis
-all: include/autoconf.h $(dir-y) witrom.bin
+all: include/autoconf.h $(dir-y) witrom.bin witrom.dis
+#all: include/autoconf.h $(dir-y) witrom.bin
 	@echo
 
 include/autoconf.h: .config
