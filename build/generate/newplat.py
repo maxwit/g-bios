@@ -33,8 +33,8 @@ def create_defconfig(arch, soc):
 				'CONFIG_GTH_WRITE = y\n' \
 				'\n' \
 				'CONFIG_GTH_START_MEM = ' + soc_info_lists[3] + '\n' \
-				'CONFIG_GBH_START_MEM = ' + soc_info_lists[4] + '\n' \
-				'CONFIG_GBH_START_BLK = 1\n' \
+				'CONFIG_BL2_START_MEM = ' + soc_info_lists[4] + '\n' \
+				'CONFIG_BL2_START_BLK = 1\n' \
 				'\n' \
 				'# Flash\n' \
 				'CONFIG_NAND = y\n' \

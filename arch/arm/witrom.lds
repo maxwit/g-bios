@@ -20,10 +20,10 @@ SECTIONS
 		. = ALIGN(4);
 	}
 
-	.gbios_loader ALIGN(4):
+	.witrom_loader ALIGN(4):
 	{
 		g_loader_begin = .;
-		*(.gbios_loader)
+		*(.witrom_loader)
 		g_loader_end = ALIGN(4);
 	}
 

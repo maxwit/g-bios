@@ -60,7 +60,7 @@ handle_reset:
 #elif defined(CONFIG_OMAP3)
 	mov r12, #0x1		@ to invalidate L2
 	.word 0xE1600070	@ Call SMI monitor
-#elif defined(CONFIG_OMAP3)
+#elif defined(CONFIG_OMAP4)
 	ldr sp, =(OMAP4_SRAM_BASE + OMAP4_SRAM_SIZE)
 #endif
 

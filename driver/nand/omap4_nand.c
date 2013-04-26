@@ -2,7 +2,7 @@
 #include <delay.h>
 #include <flash/nand.h>
 
-static int omap3_nand_ready(struct nand_chip *nand)
+static int omap4_nand_ready(struct nand_chip *nand)
 {
 	return readl(VA(GPMC_BASE + GPMC_STATUS)) & (1 << 8);
 }
@@ -30,7 +30,7 @@ int nand_init(struct nand_chip *nand)
 	nand->cmmd_port = VA(GPMC_BASE + GPMC_NAND_COMMAND_0);
 	nand->addr_port = VA(GPMC_BASE + GPMC_NAND_ADDRESS_0);
 	nand->data_port = VA(GPMC_BASE + GPMC_NAND_DATA_0);
-	nand->nand_ready = omap3_nand_ready;
+	nand->nand_ready = omap4_nand_ready;
 
 	return 0;
 }

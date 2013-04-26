@@ -28,7 +28,7 @@ static int nand_do_load(struct nand_chip *nand, __u32 nstart, void *mstart)
 		printf("g-bios found.\n");
 #endif
 	} else {
-		load_size = CONFIG_GBH_LOAD_SIZE;
+		load_size = CONFIG_BL2_LOAD_SIZE;
 #ifdef CONFIG_DEBUG
 		printf("g-bios NOT found, assuming 3rd-party bootloader.\n");
 #endif
@@ -60,7 +60,7 @@ static int nand_loader(struct loader_opt *opt)
 	if (ret < 0)
 		return ret;
 
-	ret = nand_do_load(&nand, CONFIG_GBH_NAND_START, VA(CONFIG_GBH_START_MEM));
+	ret = nand_do_load(&nand, CONFIG_BL2_NAND_START, VA(CONFIG_BL2_START_MEM));
 
 	return ret;
 }

@@ -9,7 +9,7 @@
 
 extern struct loader_opt g_loader_begin[], g_loader_end[];
 
-static int load_gbios_bh(char key);
+static int load_bl2(char key);
 
 int main(void)
 {
@@ -17,7 +17,8 @@ int main(void)
 
 	read_cpu_id();
 
-#ifdef CONFIG_SDRAM_TESTING
+#if 0
+// #ifdef CONFIG_SDRAM_TESTING
 	volatile __u32 *p = VA(SDRAM_BASE);
 
 	while (p < (__u32 *)(SDRAM_BASE + SDRAM_SIZE)) {
@@ -46,10 +47,10 @@ int main(void)
 				struct loader_opt *loader;
 #endif
 
-				load_gbios_bh(key);
+				load_bl2(key);
 
 #ifdef CONFIG_LOADER_MENU
-				printf("\nGTH Menu:\n");
+				printf("\nBoot Menu:\n");
 
 				for (loader = g_loader_begin; loader < g_loader_end; loader++)
 					printf("  [%c] %s\n", loader->ckey[0], loader->prompt);
@@ -67,18 +68,18 @@ int main(void)
 		udelay(0x1000);
 	}
 
-	load_gbios_bh(CONFIG_DEFAULT_LOADER);
+	load_bl2(CONFIG_DEFAULT_LOADER);
 
 	return 'm';
 }
 
-static inline void boot_bh()
+static inline void boot()
 {
 	printf("\n");
-	((void (*)())CONFIG_GBH_START_MEM)();
+	((void (*)())CONFIG_BL2_START_MEM)();
 }
 
-int load_gbios_bh(char key)
+int load_bl2(char key)
 {
 	int ret;
 	struct loader_opt *loader;
@@ -95,13 +96,13 @@ int load_gbios_bh(char key)
 			// fixme: prompt for RAM/ROM
 			printf("Loading from %s ...\n", loader->prompt);
 
-			loader->load_addr = (void *)CONFIG_GBH_START_MEM;
+			loader->load_addr = (void *)CONFIG_BL2_START_MEM;
 
 			ret = loader->main(loader);
 			if (ret < 0)
 				return ret;
 
-			boot_bh();
+			boot();
 		}
 	}
 
@@ -111,7 +112,7 @@ int load_gbios_bh(char key)
 #ifdef CONFIG_RAM_LOADER
 static int ram_loader(struct loader_opt *loader)
 {
-	boot_bh();
+	boot();
 	return -1;
 }
 
