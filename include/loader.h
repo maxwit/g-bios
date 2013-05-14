@@ -16,12 +16,20 @@ struct loader_opt {
 	void *load_addr; // fixme: void *load_addr[2];
 	int  load_flash; // fixme
 	int  load_size;
+#ifdef CONFIG_LOADER_MENU
 	const char *prompt;
+#endif
 	char ckey[2];
 	int (*main)(struct loader_opt *opt);
 };
 
 // DO NOT add "static" here
+#ifdef CONFIG_LOADER_MENU
 #define REGISTER_LOADER(key, routine, str) \
 	const __USED__ __WITROM_LOADER__ struct loader_opt __witrom_loader_##key = \
 		{.ckey = #key, .main = routine, .prompt = str}
+#else
+#define REGISTER_LOADER(key, routine, str) \
+	const __USED__ __WITROM_LOADER__ struct loader_opt __witrom_loader_##key = \
+		{.ckey = #key, .main = routine}
+#endif

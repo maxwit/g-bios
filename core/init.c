@@ -84,6 +84,7 @@ int load_bl2(char key)
 	int ret;
 	struct loader_opt *loader;
 
+	// case ignore
 	if ('A' <= key && key <= 'Z')
 		key += 'a' - 'A';
 
@@ -93,8 +94,10 @@ int load_bl2(char key)
 #endif
 
 		if (loader->ckey[0] == key) {
+#ifdef CONFIG_LOADER_MENU
 			// fixme: prompt for RAM/ROM
 			printf("Loading from %s ...\n", loader->prompt);
+#endif
 
 			loader->load_addr = (void *)CONFIG_BL2_START_MEM;
 

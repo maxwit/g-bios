@@ -3,6 +3,11 @@
 #include <loader.h>
 #include <flash/nand.h>
 
+// fixme
+#ifndef CONFIG_BL2_LOAD_SIZE
+#define CONFIG_BL2_LOAD_SIZE KB(512)
+#endif
+
 static int nand_do_load(struct nand_chip *nand, __u32 nstart, void *mstart)
 {
 	__u32 curr_page, last_page;
