@@ -152,7 +152,7 @@ hang:
 	sub  pc, pc, #8
 
 build_time:
-	.ascii "\n\r\n\rWitRom " __WITROM_VER__
+	.ascii "\n\r\n\rg-bios " __GBIOS_VER__
 #ifdef CONFIG_DEBUG
 	.ascii " (" __TIME__ ")"
 #endif

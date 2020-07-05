@@ -1,8 +1,8 @@
 include/autoconf.h
 .config
-witrom.bin
-witrom.elf
-witrom.dis
+g-bios.bin
+g-bios.elf
+g-bios.dis
 *.o
 *.dis
 *.elf

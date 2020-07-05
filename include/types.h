@@ -80,7 +80,7 @@ typedef enum {false, true} bool;
 		(b) = _________tmp; \
 	} while(0)
 
-#ifdef __WITROM_VER__
+#ifdef __GBIOS_VER__
 #define GAPI
 #define EXPORT_SYMBOL(func)
 #else

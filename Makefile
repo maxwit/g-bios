@@ -14,7 +14,7 @@ LD = $(CROSS_COMPILE)ld
 OBJDUMP = $(CROSS_COMPILE)objdump
 OBJCOPY = $(CROSS_COMPILE)objcopy
 
-CFLAGS = -ffreestanding -nostdinc -nostdlib -fno-builtin -I$(TOP_DIR)/include -include witrom.h -D__WITROM_VER__=\"$(MAJOR_VER).$(MINOR_VER)\" -D__LITTLE_ENDIAN -O2 -Wall -Werror -mno-thumb-interwork -march=$(CONFIG_ARCH_VER) -mabi=aapcs-linux
+CFLAGS = -ffreestanding -nostdinc -nostdlib -fno-builtin -I$(TOP_DIR)/include -include g-bios.h -D__GBIOS_VER__=\"$(MAJOR_VER).$(MINOR_VER)\" -D__LITTLE_ENDIAN -O2 -Wall -Werror -mno-thumb-interwork -march=$(CONFIG_ARCH_VER) -mabi=aapcs-linux
 
 #ifeq ($(CONFIG_DEBUG),y)
 #	CFLAGS += -DCONFIG_DEBUG
@@ -24,7 +24,7 @@ CFLAGS = -ffreestanding -nostdinc -nostdlib -fno-builtin -I$(TOP_DIR)/include -i
 
 ASFLAGS = $(CFLAGS) -D__ASSEMBLY__ -DCONFIG_GTH
 
-LDFLAGS = -m armelf_linux_eabi
+# LDFLAGS = -m armelf_eabi
 
 builtin-obj = built-in.o
 
@@ -43,8 +43,8 @@ dir-y := arch/$(CONFIG_ARCH) core driver lib
 
 subdir-objs := $(foreach n, $(dir-y), $(n)/$(builtin-obj))
 
-all: include/autoconf.h $(dir-y) witrom.bin witrom.dis
-#all: include/autoconf.h $(dir-y) witrom.bin
+all: include/autoconf.h $(dir-y) g-bios.bin g-bios.dis
+#all: include/autoconf.h $(dir-y) g-bios.bin
 	@echo
 
 include/autoconf.h: .config
@@ -52,14 +52,14 @@ include/autoconf.h: .config
 	@sed -i -e '/CONFIG_CROSS_COMPILE/d' -e '/CONFIG_ARCH_VER\>/d'  $@
 	@sed -i '/^$$/d' $@
 
-witrom.bin: witrom.elf
+g-bios.bin: g-bios.elf
 	$(OBJCOPY) -O binary -S $< $@
 
-witrom.dis: witrom.elf
+g-bios.dis: g-bios.elf
 	$(OBJDUMP) -D $< > $@
 
-witrom.elf: $(subdir-objs)
-	$(LD) $(LDFLAGS) -T arch/$(CONFIG_ARCH)/witrom.lds -Ttext $(CONFIG_GTH_START_MEM) $^ -o $@
+g-bios.elf: $(subdir-objs)
+	$(LD) $(LDFLAGS) -T arch/$(CONFIG_ARCH)/g-bios.lds -Ttext $(CONFIG_GTH_START_MEM) $^ -o $@
 
 $(dir-y):
 	@make $(obj_build)$@
@@ -72,7 +72,7 @@ $(DEFCONFIG_LIST):
 	@./build/generate/defconfig.py $@
 	@echo
 
-install: witrom.bin
+install: g-bios.bin
 	@mkdir -p $(IMG_DIR)
 	@for fn in $^; do \
 		cp -v $$fn $(IMG_DIR); \
@@ -83,7 +83,7 @@ clean:
 	@for dir in $(dir-y); do \
 		make $(obj_build)$$dir clean; \
 	 done
-	@rm -vf witrom.*
+	@rm -vf g-bios.*
 	@echo
 
 distclean: clean

@@ -2,7 +2,7 @@
 
 #include <types.h>
 
-#ifdef __WITROM_VER__
+#ifdef __GBIOS_VER__
 #define __INIT__           __attribute__ ((__section__(".code.init")))
 #else
 #define __INIT__           __attribute__((constructor))
@@ -30,7 +30,7 @@
 #define POSTSUBS_INIT(func) \
 		static __USED__ __INIT_POSTSUBS__ init_func_t __initcall_##func = func
 
-#ifdef __WITROM_VER__
+#ifdef __GBIOS_VER__
 #define module_init(func) \
 	static __USED__ __INIT_DRV__  init_func_t __initcall_##func = func
 #else

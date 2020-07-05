@@ -1,5 +1,3 @@
-// porting from kernel and adapted for WitRom
-
 #pragma once
 
 #define	EPERM     1
@@ -159,4 +157,3 @@
 #define EJUKEBOX	528	/* Request initiated, but will not complete before timeout */
 #define EIOCBQUEUED	529	/* iocb queued, will get completion event */
 #define EIOCBRETRY	530	/* iocb queued, will trigger a retry */
-

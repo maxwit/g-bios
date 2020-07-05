@@ -10,7 +10,7 @@
 #define LM_RAM       'r'
 #define LM_MMC       'm'
 
-#define __WITROM_LOADER__    __attribute__((section(".witrom_loader")))
+#define __GBIOS_LOADER__    __attribute__((section(".witrom_loader")))
 
 struct loader_opt {
 	void *load_addr; // fixme: void *load_addr[2];
@@ -26,10 +26,10 @@ struct loader_opt {
 // DO NOT add "static" here
 #ifdef CONFIG_LOADER_MENU
 #define REGISTER_LOADER(key, routine, str) \
-	const __USED__ __WITROM_LOADER__ struct loader_opt __witrom_loader_##key = \
+	const __USED__ __GBIOS_LOADER__ struct loader_opt __witrom_loader_##key = \
 		{.ckey = #key, .main = routine, .prompt = str}
 #else
 #define REGISTER_LOADER(key, routine, str) \
-	const __USED__ __WITROM_LOADER__ struct loader_opt __witrom_loader_##key = \
+	const __USED__ __GBIOS_LOADER__ struct loader_opt __witrom_loader_##key = \
 		{.ckey = #key, .main = routine}
 #endif
