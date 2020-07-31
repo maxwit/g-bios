@@ -14,6 +14,7 @@ def get_plat():
 			return soc_list[5] + ' ' + soc_list[0]
 	return "null"
 
+# TODO: filter out some options, i.e. CONFIG_COMPILE
 def generate_autoconf(dot_conf, auto_conf, plat_info):
 	fd1 = open(dot_conf, 'r')
 	fd2 = open(auto_conf, 'w')

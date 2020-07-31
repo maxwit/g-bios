@@ -73,9 +73,9 @@ int main(void)
 	return 'm';
 }
 
-static inline void boot()
+static inline void boot(struct loader_opt *loader)
 {
-	((void (*)())CONFIG_OS_START_MEM)();
+	((void (*)())loader->load_addr)();
 }
 
 int load_os(char key)
@@ -105,7 +105,7 @@ int load_os(char key)
 				return ret;
 
 			printf("\n"); // FIXME: to be removed
-			boot();
+			boot(loader);
 		}
 
 		// TODO: invalid key

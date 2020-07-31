@@ -49,8 +49,6 @@ all: include/autoconf.h $(dir-y) g-bios.bin g-bios.dis
 
 include/autoconf.h: .config
 	@build/generate/autoconf.py $< $@
-	@sed -i -e '/CONFIG_CROSS_COMPILE/d' -e '/CONFIG_ARCH_VER\>/d'  $@
-	@sed -i '/^$$/d' $@
 
 g-bios.bin: g-bios.elf
 	$(OBJCOPY) -O binary -S $< $@
