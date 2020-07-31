@@ -7,8 +7,8 @@
 // #define MTD_DEV_NAME_LEN    32
 
 #define MAX_FLASH_PARTS	    16
-// #define DEF_VOL_ID          1  // fixme: default point to g-bios bottom half
-#define BOOT_FLASH_ID       0 // fixme
+// #define DEF_VOL_ID          1  // FIXME: default point to g-bios bottom half
+#define BOOT_FLASH_ID       0 // FIXME
 
 #define FLASH_ABSENT		0
 #define FLASH_RAM			1
@@ -17,7 +17,7 @@
 #define FLASH_NANDFLASH		4
 #define FLASH_DATAFLASH		6
 #define FLASH_UBIVOLUME		7
-#define FLASH_FLASH_PART   (1 << 6) // fixme
+#define FLASH_FLASH_PART   (1 << 6) // FIXME
 
 enum {
 	FLASH_IOCG_INFO,
@@ -141,11 +141,11 @@ struct flash_chip {
 	};
 
 	int   type;
-	char  name[MTD_ID_NAME_LEN]; // fixme: no need for slaves
+	char  name[MTD_ID_NAME_LEN]; // FIXME: no need for slaves
 
 	size_t write_size;
 	size_t erase_size;
-	size_t chip_size; // fixme
+	size_t chip_size; // FIXME
 
 	__u32 write_shift;
 	__u32 erase_shift;
@@ -169,7 +169,7 @@ struct flash_chip {
 
 	int (*block_is_bad)(struct flash_chip *, __u32);
 	int (*block_mark_bad)(struct flash_chip *, __u32);
-	int (*scan_bad_block)(struct flash_chip *); // fixme: to be removed
+	int (*scan_bad_block)(struct flash_chip *); // FIXME: to be removed
 
 	OOB_MODE oob_mode;
 };

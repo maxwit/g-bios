@@ -66,10 +66,17 @@ $(dir-y):
 
 .PHONY: $(dir-y)
 
-# fixme
+help:
+	@echo 'usage: make <device>_defconfig'
+	@echo 'the available <device>_defconfig list:'
+	@for cfg in $(DEFCONFIG_LIST); do echo "   $$cfg"; done
+	@echo
+
+# FIXME
 $(DEFCONFIG_LIST):
 	@echo "configure for board \"$(@:%_defconfig=%)\""
-	@./build/generate/defconfig.py $@
+#	@./build/generate/defconfig.py $@
+	@cp -v build/configs/arm/$@ .config
 	@echo
 
 install: g-bios.bin

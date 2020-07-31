@@ -142,7 +142,7 @@ static void nand_command(struct nand_chip *nand,
 		break;
 	}
 
-	nand_wait_ready(nand); // fixme: not need for READID
+	nand_wait_ready(nand); // FIXME: not need for READID
 }
 
 static inline void config_nand(struct nand_chip *nand,

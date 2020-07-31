@@ -22,7 +22,7 @@ int GAPI ioctl(int fd, int cmd, ...);
 
 loff_t GAPI lseek(int fd, loff_t offset, int whence);
 
-// fixme
+// FIXME
 #define MS_ROOT     (1 << 0)
 #define MS_NODEV    (1 << 1)
 

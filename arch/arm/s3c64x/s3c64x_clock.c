@@ -66,7 +66,7 @@ int soc_init(void)
 #define MCMD_MRS    2
 #define MCMD_NOP    3
 
-// fixme
+// FIXME
 #define TIME2CYCLE(t) (HCLK_RATE / 1000 * (t) / 1000000)
 #define TIME_SUB3(t)  ((t) <= 3 ? 0 : (t) - 3)
 

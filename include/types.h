@@ -3,7 +3,7 @@
 #ifdef __arm__
 #include <arm/types.h>
 #else
-#include <arm/types.h> // fixme
+#include <arm/types.h> // FIXME
 // #error "arch not supported yet"
 #endif
 
@@ -13,7 +13,7 @@ typedef unsigned int   __u32;
 typedef unsigned long  size_t, loff_t;
 typedef signed int     ssize_t;
 
-// fixme
+// FIXME
 typedef unsigned short __le16;
 typedef unsigned int   __le32;
 
@@ -71,7 +71,7 @@ typedef enum {false, true} bool;
 #define min(x, y)         ((x) < (y) ? (x) : (y))
 #define max(x, y)         ((x) > (y) ? (x) : (y))
 
-// fixme
+// FIXME
 #define SWAP(a,b) \
 	do { \
 		typeof(a) _________tmp; \

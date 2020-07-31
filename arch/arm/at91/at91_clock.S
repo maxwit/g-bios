@@ -7,7 +7,7 @@
 
 soc_init:
 	@ init sp
-	@ fixme: to read SRAM dynamically
+	@ FIXME: to read SRAM dynamically
 	mov   r0,   #0
 	msr   cpsr, #(ARM_MODE_UND | ARM_INT_MASK)
 	add   sp,   r0, #AT91SAM926X_SRAM_SIZE

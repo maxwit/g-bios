@@ -1,6 +1,6 @@
 #pragma once
 
-// fixme
+// FIXME
 #ifndef ffs
 
 static int inline generic_ffs(int x)

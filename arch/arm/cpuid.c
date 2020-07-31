@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 // read CPU, SoC & Board IDs
-// fixme: add ARM Cortex+ support
+// FIXME: add ARM Cortex+ support
 
 // ID list:
 // PXA168: 0x4115926*?

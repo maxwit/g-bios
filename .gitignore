@@ -8,3 +8,5 @@ g-bios.dis
 *.elf
 *.pdf
 *.pyc
+
+.vscode

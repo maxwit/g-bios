@@ -20,11 +20,11 @@
 #define IRQ_STACK_SIZE   SVC_STACK_SIZE
 #define FIQ_STACK_SIZE   SVC_STACK_SIZE
 
-// fixme
+// FIXME
 #define CONFIG_STACK_SIZE \
 	(SVC_STACK_SIZE + UND_STACK_SIZE + ABT_STACK_SIZE + IRQ_STACK_SIZE + FIQ_STACK_SIZE)
 
-#define CONFIG_HEAP_SIZE   ((CONFIG_BL2_START_MEM - SDRAM_BASE) / 4)
+#define CONFIG_HEAP_SIZE   ((CONFIG_OS_START_MEM - SDRAM_BASE) / 4)
 
 #ifndef __ASSEMBLY__
 #ifdef CONFIG_IRQ_SUPPORT
@@ -79,7 +79,7 @@
 			: "i" (ARM_FIQ_MASK) \
 			: "memory"); \
 	} while (0)
-#else // fixme
+#else // FIXME
 #define irq_enable()
 #define irq_disable()
 #define lock_irq_psr(cpsr)

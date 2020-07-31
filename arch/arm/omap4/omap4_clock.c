@@ -116,7 +116,7 @@ int soc_init(void)
 	per_dpll_init(&g_per_dpll);
 	core_dpll_init(&g_core_dpll);
 
-	// fixme: to be moved
+	// FIXME: to be moved
 	// GPIO clocks
 	writel(VA(CM_L4PER_GPIO2_CLKCTRL), 0x1);
 	writel(VA(CM_L4PER_GPIO3_CLKCTRL), 0x1);

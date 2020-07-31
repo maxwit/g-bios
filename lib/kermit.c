@@ -58,7 +58,7 @@ int kermit_load(struct loader_opt *opt)
 	__u8 buff[KERM_BUF_LEN];
 	__u8 curr_char;
 	int index, count, checksum, len, seq, real_seq = 0;
-	int type = KERM_TYPE_BREAK; // fixme
+	int type = KERM_TYPE_BREAK; // FIXME
 	__u8 *curr_addr = (__u8 *)opt->load_addr;
 
 	curr_addr = opt->load_addr;
@@ -102,7 +102,7 @@ int kermit_load(struct loader_opt *opt)
 		type = buff[index++];
 		checksum += type;
 
-		if (len) // fixme: handle extended length
+		if (len) // FIXME: handle extended length
 			len -= 2;
 
 		while (len > 1) {

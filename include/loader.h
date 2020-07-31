@@ -13,8 +13,8 @@
 #define __GBIOS_LOADER__    __attribute__((section(".witrom_loader")))
 
 struct loader_opt {
-	void *load_addr; // fixme: void *load_addr[2];
-	int  load_flash; // fixme
+	void *load_addr; // FIXME: void *load_addr[2];
+	int  load_flash; // FIXME
 	int  load_size;
 #ifdef CONFIG_LOADER_MENU
 	const char *prompt;
@@ -25,11 +25,11 @@ struct loader_opt {
 
 // DO NOT add "static" here
 #ifdef CONFIG_LOADER_MENU
-#define REGISTER_LOADER(key, routine, str) \
+#define REGISTER_LOADER(key, routine, desc) \
 	const __USED__ __GBIOS_LOADER__ struct loader_opt __witrom_loader_##key = \
-		{.ckey = #key, .main = routine, .prompt = str}
+		{.ckey = #key, .main = routine, .prompt = desc}
 #else
-#define REGISTER_LOADER(key, routine, str) \
+#define REGISTER_LOADER(key, routine, desc) \
 	const __USED__ __GBIOS_LOADER__ struct loader_opt __witrom_loader_##key = \
 		{.ckey = #key, .main = routine}
 #endif

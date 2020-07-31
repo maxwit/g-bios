@@ -57,7 +57,7 @@ static const char *int_to_oct_str(__u32 val, char str[])
 }
 #endif
 
-// fixme
+// FIXME
 int printf(const char *fmt, ...)
 {
 	char buf[BUF_LEN];

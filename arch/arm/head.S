@@ -32,7 +32,7 @@ _start:
 handle_reset:
 	msr  cpsr, #(ARM_MODE_SVC | ARM_INT_MASK)
 
-@ fixme
+@ FIXME
 #if 0
 	@ init default sp
 #if defined(CONFIG_S3C2410) || defined(CONFIG_S3C2440)
@@ -70,18 +70,15 @@ handle_reset:
 
 	bl   uart_init
 
-	@ modification:
-	@ 1. use adr, instead of ldr=
-	@ 2. use loop, instead of puts
-	@ 3. remove banner
-	adr  r4, build_time
+	@ show banner
+	adr  r4, banner
 	ldrb r0, [r4], #1
 	b    1f
 0:
 	bl   uart_send_byte
 	ldrb r0, [r4], #1
 1:
-	cmp  r0, #0x0
+	cmp  r0, #0
 	bne  0b
 
 	bl   mem_init
@@ -151,7 +148,7 @@ hang:
 	bl   uart_send_byte
 	sub  pc, pc, #8
 
-build_time:
+banner:
 	.ascii "\n\r\n\rg-bios " __GBIOS_VER__
 #ifdef CONFIG_DEBUG
 	.ascii " (" __TIME__ ")"

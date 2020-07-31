@@ -140,7 +140,7 @@ struct dentry {
 	struct super_block *d_sb;
 	struct dentry *d_parent;
 	struct list_node d_subdirs, d_child;
-	// int d_type; // fixme
+	// int d_type; // FIXME
 };
 
 struct dentry *__d_alloc(struct super_block *sb, const struct qstr *str);
@@ -158,7 +158,7 @@ struct linux_dirent {
 	unsigned short d_reclen;  /* Length of this linux_dirent */
 	char		   d_name[0];  /* Filename (null-terminated) */
 	/* length is actually (d_reclen - 2 - offsetof(struct linux_dirent, d_name) */
-	unsigned char  d_type; // fixme
+	unsigned char  d_type; // FIXME
 };
 
 int filldir(struct linux_dirent *, const char * name, int namlen, loff_t offset,
@@ -173,7 +173,7 @@ struct super_block {
 
 struct super_block *sget(struct file_system_type *type, void *data);
 
-// fixme
+// FIXME
 int get_unused_fd();
 int fd_install(int fd, struct file *fp);
 struct file *fget(unsigned int fd);

@@ -9,7 +9,7 @@
 
 extern struct loader_opt g_loader_begin[], g_loader_end[];
 
-static int load_bl2(char key);
+static int load_os(char key);
 
 int main(void)
 {
@@ -47,7 +47,7 @@ int main(void)
 				struct loader_opt *loader;
 #endif
 
-				load_bl2(key);
+				load_os(key);
 
 #ifdef CONFIG_LOADER_MENU
 				printf("\nBoot Menu:\n");
@@ -68,18 +68,17 @@ int main(void)
 		udelay(0x1000);
 	}
 
-	load_bl2(CONFIG_DEFAULT_LOADER);
+	load_os(CONFIG_DEFAULT_LOADER);
 
 	return 'm';
 }
 
 static inline void boot()
 {
-	printf("\n");
-	((void (*)())CONFIG_BL2_START_MEM)();
+	((void (*)())CONFIG_OS_START_MEM)();
 }
 
-int load_bl2(char key)
+int load_os(char key)
 {
 	int ret;
 	struct loader_opt *loader;
@@ -95,18 +94,21 @@ int load_bl2(char key)
 
 		if (loader->ckey[0] == key) {
 #ifdef CONFIG_LOADER_MENU
-			// fixme: prompt for RAM/ROM
+			// FIXME: prompt for RAM/ROM
 			printf("Loading from %s ...\n", loader->prompt);
 #endif
 
-			loader->load_addr = (void *)CONFIG_BL2_START_MEM;
+			loader->load_addr = (void *)CONFIG_OS_START_MEM;
 
 			ret = loader->main(loader);
 			if (ret < 0)
 				return ret;
 
+			printf("\n"); // FIXME: to be removed
 			boot();
 		}
+
+		// TODO: invalid key
 	}
 
 	return 0;

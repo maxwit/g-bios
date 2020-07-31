@@ -39,5 +39,5 @@
 
 typedef int (*init_func_t)(void);
 
-// fixme
+// FIXME
 const char* get_func_name(const void *func);
