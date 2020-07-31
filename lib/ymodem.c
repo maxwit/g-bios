@@ -111,7 +111,7 @@ int ymodem_load(struct loader_opt *opt)
 			blk_num[0] != (__u8)(blk & 0xFF)) {
 			uart_clear_buff();
 			uart_send_byte(NAK);
-#ifdef CONFIG_DEBUG
+#ifdef CONFIG_VERBOSE
 			printf("block num (%d) error!\n", blk);
 #endif
 			continue;

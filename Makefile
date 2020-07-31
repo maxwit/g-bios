@@ -6,7 +6,7 @@ MINOR_VER = 2
 TOP_DIR := $(shell pwd)
 IMG_DIR := $(CONFIG_IMAGE_PATH)
 
-CROSS_COMPILE = $(CONFIG_CROSS_COMPILE:"%"=%)
+CROSS_COMPILE = $(CONFIG_CROSS_COMPILE)
 
 AS = $(CROSS_COMPILE)as
 CC = $(CROSS_COMPILE)gcc
@@ -16,11 +16,9 @@ OBJCOPY = $(CROSS_COMPILE)objcopy
 
 CFLAGS = -ffreestanding -nostdinc -nostdlib -fno-builtin -I$(TOP_DIR)/include -include g-bios.h -D__GBIOS_VER__=\"$(MAJOR_VER).$(MINOR_VER)\" -D__LITTLE_ENDIAN -O2 -Wall -Werror -mno-thumb-interwork -march=$(CONFIG_ARCH_VER) -mabi=aapcs-linux
 
-#ifeq ($(CONFIG_DEBUG),y)
-#	CFLAGS += -DCONFIG_DEBUG
+#ifeq ($(CONFIG_VERBOSE),y)
+#	CFLAGS += -DCONFIG_VERBOSE
 #endif
-
-# fxime: to add "-mtune=xxx, -mfloat-abi=xxx"
 
 ASFLAGS = $(CFLAGS) -D__ASSEMBLY__
 

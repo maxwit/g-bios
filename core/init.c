@@ -88,7 +88,7 @@ int load_os(char key)
 		key += 'a' - 'A';
 
 	for (loader = g_loader_begin; loader < g_loader_end; loader++) {
-#ifdef CONFIG_DEBUG
+#ifdef CONFIG_VERBOSE
 		printf("%c: 0x%x\n", loader->ckey[0], loader->main);
 #endif
 

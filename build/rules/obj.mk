@@ -1,5 +1,3 @@
-all:
-
 include .config
 
 include build/rules/common.mk

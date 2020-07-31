@@ -9,7 +9,7 @@ int soc_init(void)
 	asm volatile ("mov sp, %0\n\t"::"r"(val));
 
 	// configure GPIO
-#ifdef CONFIG_DEBUG
+#ifdef CONFIG_VERBOSE
 	val = readl(VA(0x7F0080A0));
 	val &= ~(3 << 30);
 	val |= 1 << 30;

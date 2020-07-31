@@ -17,7 +17,7 @@ int snprintf(char *, size_t, const char *, ...);
 int fflush(int);
 
 // right here?
-#ifdef CONFIG_DEBUG
+#ifdef CONFIG_VERBOSE
 #define DPRINT(fmt, args ...) \
 	printf(fmt, ##args)
 #define GEN_DBG(fmt, args ...) \

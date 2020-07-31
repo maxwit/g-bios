@@ -2,7 +2,7 @@
 #include <loader.h>
 #include <uart/uart.h>
 #include <uart/kermit.h>
-#ifdef CONFIG_DEBUG
+#ifdef CONFIG_VERBOSE
 #include <stdio.h>
 #endif
 
@@ -88,7 +88,7 @@ int kermit_load(struct loader_opt *opt)
 		seq -= KERM_KEY_SPACE;
 
 		if (seq != real_seq) {
-#ifdef CONFIG_DEBUG
+#ifdef CONFIG_VERBOSE
 			// while (1)
 				printf("SEQ error: 0x%x != 0x%x\n", seq, real_seq);
 #endif
@@ -131,7 +131,7 @@ int kermit_load(struct loader_opt *opt)
 		/* checksum */
 		curr_char = buff[index++];
 		if (curr_char != (KERM_KEY_SPACE + (0x3f & (checksum + (0x03 & (checksum >> 6)))))) {
-#ifdef CONFIG_DEBUG
+#ifdef CONFIG_VERBOSE
 			// while (1)
 				printf("Checksum error!\n");
 #endif

@@ -96,7 +96,7 @@ handle_reset:
 	ldr  r3, [sp, #-4]
 	cmp  r0, r3
 	beq  Lm
-#ifdef CONFIG_DEBUG
+#ifdef CONFIG_VERBOSE
 	sub  r1, sp, #4
 	adr  r0, sdram_fmt
 	bl   printf
@@ -149,13 +149,13 @@ hang:
 
 banner:
 	.ascii "\n\r\n\rg-bios " __GBIOS_VER__
-#ifdef CONFIG_DEBUG
+#ifdef CONFIG_VERBOSE
 	.ascii " (" __TIME__ ")"
 #endif
 	.asciz "\n\r"
 	.align 2
 
-#ifdef CONFIG_DEBUG
+#ifdef CONFIG_VERBOSE
 sdram_fmt:
 	.asciz "%p: %x, %x\n"
 	.align 2
