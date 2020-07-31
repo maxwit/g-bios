@@ -1,11 +1,10 @@
 include/autoconf.h
 .config
-g-bios.bin
-g-bios.elf
-g-bios.dis
 *.o
-*.dis
 *.elf
+*.bin
+*.hex
+*.dis
 *.pdf
 *.pyc
 

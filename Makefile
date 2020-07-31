@@ -43,8 +43,7 @@ dir-y := arch/$(CONFIG_ARCH) core driver lib
 
 subdir-objs := $(foreach n, $(dir-y), $(n)/$(builtin-obj))
 
-all: include/autoconf.h $(dir-y) g-bios.bin g-bios.dis
-#all: include/autoconf.h $(dir-y) g-bios.bin
+all: include/autoconf.h $(dir-y) g-bios.bin g-bios.hex
 	@echo
 
 include/autoconf.h: .config
@@ -53,8 +52,8 @@ include/autoconf.h: .config
 g-bios.bin: g-bios.elf
 	$(OBJCOPY) -O binary -S $< $@
 
-g-bios.dis: g-bios.elf
-	$(OBJDUMP) -D $< > $@
+g-bios.hex: g-bios.elf
+	$(OBJCOPY) -O ihex -S $< $@
 
 g-bios.elf: $(subdir-objs)
 	$(LD) $(LDFLAGS) -T build/g-bios.lds -Ttext $(CONFIG_START_MEM) $^ -o $@
