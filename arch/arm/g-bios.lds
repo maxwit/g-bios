@@ -20,18 +20,18 @@ SECTIONS
 		. = ALIGN(4);
 	}
 
-	.os_loader ALIGN(4):
-	{
-		g_loader_begin = .;
-		*(.os_loader)
-		g_loader_end = ALIGN(4);
-	}
-
 	.bss ALIGN(4):
 	{
 		bss_start = .;
 		*(.bss)
 		bss_end = .;
+	}
+
+	.os_loader ALIGN(4):
+	{
+		g_loader_begin = .;
+		*(.os_loader)
+		g_loader_end = ALIGN(4);
 	}
 
 	_end = ALIGN(4);
