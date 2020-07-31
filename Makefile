@@ -57,7 +57,7 @@ g-bios.dis: g-bios.elf
 	$(OBJDUMP) -D $< > $@
 
 g-bios.elf: $(subdir-objs)
-	$(LD) $(LDFLAGS) -T arch/$(CONFIG_ARCH)/g-bios.lds -Ttext $(CONFIG_START_MEM) $^ -o $@
+	$(LD) $(LDFLAGS) -T build/g-bios.lds -Ttext $(CONFIG_START_MEM) $^ -o $@
 
 $(dir-y):
 	@make $(obj_build)$@
