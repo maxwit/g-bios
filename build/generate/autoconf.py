@@ -4,7 +4,7 @@
 #   $0 .config autoconf.h
 
 import os, sys
-import mw_socs #fixme: to be removed
+import mw_socs #FIXME: to be removed
 
 def get_plat():
 	for soc in mw_socs.socs_info.keys():

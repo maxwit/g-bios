@@ -28,9 +28,9 @@ def traverse(node):
 		for n in lst:
 			if n.attrib['name'] == default_node:
 				traverse(n)
-			# fixme: check matched or not
+			# FIXME: check matched or not
 	elif node.tag == 'select':
-		l2 = node.text.split(' ') # fixme: re.split
+		l2 = node.text.split(' ') # FIXME: re.split
 		for s in l2:
 			config[s] = 'y'
 	else:
@@ -88,11 +88,11 @@ def get_attr(substr, fd):
 			return elem[1]
 	return None
 
-#fixme
+#FIXME
 def get_active_nic():
 	return "eth0"
 
-#fixme
+#FIXME
 def get_net_mask(nic):
 	return "255.255.255.0"
 

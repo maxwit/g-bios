@@ -1,7 +1,7 @@
 -include .config
 
 MAJOR_VER = 1
-MINOR_VER = 0
+MINOR_VER = 2
 
 TOP_DIR := $(shell pwd)
 IMG_DIR := $(CONFIG_IMAGE_PATH)
@@ -33,7 +33,7 @@ MAKEFLAGS = --no-print-directory
 export AS CC LD OBJDUMP OBJCOPY ASFLAGS CFLAGS LDFLAGS MAKEFLAGS
 export builtin-obj TOP_DIR
 
-# fixme
+# FIXME
 DEFCONFIG_PATH = build/configs/arm
 DEFCONFIG_LIST = $(shell cd $(DEFCONFIG_PATH) && ls *_defconfig)
 
