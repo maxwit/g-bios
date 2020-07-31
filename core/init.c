@@ -97,10 +97,7 @@ int load_os(char key)
 			// FIXME: prompt for RAM/ROM
 			printf("Loading from %s ...\n", loader->prompt);
 #endif
-
-			loader->load_addr = (void *)CONFIG_OS_START_MEM;
-
-			ret = loader->main(loader);
+			ret = loader->load(loader);
 			if (ret < 0)
 				return ret;
 
