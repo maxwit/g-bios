@@ -22,7 +22,7 @@ CFLAGS = -ffreestanding -nostdinc -nostdlib -fno-builtin -I$(TOP_DIR)/include -i
 
 # fxime: to add "-mtune=xxx, -mfloat-abi=xxx"
 
-ASFLAGS = $(CFLAGS) -D__ASSEMBLY__ -DCONFIG_GTH
+ASFLAGS = $(CFLAGS) -D__ASSEMBLY__
 
 # LDFLAGS = -m armelf_eabi
 
@@ -59,7 +59,7 @@ g-bios.dis: g-bios.elf
 	$(OBJDUMP) -D $< > $@
 
 g-bios.elf: $(subdir-objs)
-	$(LD) $(LDFLAGS) -T arch/$(CONFIG_ARCH)/g-bios.lds -Ttext $(CONFIG_GTH_START_MEM) $^ -o $@
+	$(LD) $(LDFLAGS) -T arch/$(CONFIG_ARCH)/g-bios.lds -Ttext $(CONFIG_START_MEM) $^ -o $@
 
 $(dir-y):
 	@make $(obj_build)$@

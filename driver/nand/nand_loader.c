@@ -27,8 +27,8 @@ static int nand_do_load(struct nand_chip *nand, __u32 nstart, void *mstart)
 
 	buff = nand_read_page(nand, curr_page, mstart);
 
-	if (GBH_MAGIC == readl(VA(mstart + GBH_MAGIC_OFFSET))) {
-		load_size = readl(VA(mstart + GBH_SIZE_OFFSET));
+	if (WITOS_MAGIC == readl(VA(mstart + WITOS_MAGIC_OFFSET))) {
+		load_size = readl(VA(mstart + WITOS_SIZE_OFFSET));
 #ifdef CONFIG_DEBUG
 		printf("g-bios found.\n");
 #endif

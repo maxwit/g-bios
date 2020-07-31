@@ -1,5 +1,4 @@
 /*
- *
  *  comment here
  *
  */
@@ -13,19 +12,19 @@
 #endif
 _start:
 	b     handle_reset
-	ldr   pc, [pc, #24]
-	ldr   pc, [pc, #24]
-	ldr   pc, [pc, #24]
-	ldr   pc, [pc, #24]
+	ldr   pc, [pc, #20]
+	ldr   pc, [pc, #20]
+	ldr   pc, [pc, #20]
+	ldr   pc, [pc, #20]
 	.word (_end - _start)   @ for AT91SAM926X
 	ldr   pc, [pc, #20]
 	ldr   pc, [pc, #20]
 
-	.word GTH_MAGIC
 	.word handle_undef
 	.word handle_swi
 	.word handle_iabt
 	.word handle_dabt
+	.word GB_MAGIC
 	.word handle_irq
 	.word handle_fiq
 

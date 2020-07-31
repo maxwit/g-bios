@@ -79,12 +79,3 @@ typedef enum {false, true} bool;
 		(a) = (b); \
 		(b) = _________tmp; \
 	} while(0)
-
-#ifdef __GBIOS_VER__
-#define GAPI
-#define EXPORT_SYMBOL(func)
-#else
-#define GAPI    static
-#define EXPORT_SYMBOL(sym) \
-		__typeof(sym) __##sym __attribute__((alias(#sym)))
-#endif
