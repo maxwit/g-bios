@@ -20,10 +20,10 @@ SECTIONS
 		. = ALIGN(4);
 	}
 
-	.witrom_loader ALIGN(4):
+	.os_loader ALIGN(4):
 	{
 		g_loader_begin = .;
-		*(.witrom_loader)
+		*(.os_loader)
 		g_loader_end = ALIGN(4);
 	}
 
