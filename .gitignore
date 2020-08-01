@@ -11,3 +11,5 @@ include/autoconf.h
 .vscode
 .cproject
 .project
+
+.settings/

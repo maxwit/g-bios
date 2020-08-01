@@ -5,33 +5,33 @@ SECTIONS
 	.text ALIGN(4):
 	{ 
 		*(.text)
-	} > SRAM
+	} >SRAM
 
 	.data ALIGN(4):
 	{ 
 		*(.data)
 		. = ALIGN(4);
-	} > SRAM
+	} >SRAM
 
 	.rodata ALIGN(4):
 	{
 		*(.rodata)
 		. = ALIGN(4);
-	} > SRAM
+	} >SRAM
 
 	.bss ALIGN(4):
 	{
 		bss_start = .;
 		*(.bss)
 		bss_end = .;
-	} > SRAM
+	} >SRAM
 
 	.os_loader ALIGN(4):
 	{
 		g_loader_begin = .;
 		*(.os_loader)
 		g_loader_end = ALIGN(4);
-	} > SRAM
+	} >SRAM
 
 	_end = ALIGN(4);
 }

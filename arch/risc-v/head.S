@@ -2,5 +2,7 @@
 	.text
 
 _start:
+	j hang
 
 hang:
+	j hang
