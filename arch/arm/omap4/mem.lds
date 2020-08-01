@@ -1,0 +1,4 @@
+MEMORY
+{
+  SRAM (xrw): ORIGIN = 0x40304348, LENGTH = 64K
+}

@@ -12,23 +12,22 @@
 #define __GBIOS_LOADER__    __attribute__((section(".os_loader")))
 
 struct loader_opt {
-	void *load_addr; // FIXME: void *load_addr[2];
-	int  load_flash; // FIXME
+	void *load_addr;
 	int  load_size;
 #ifdef CONFIG_LOADER_MENU
 	const char *prompt;
 #endif
 	char ckey[2];
-	int (*main)(struct loader_opt *opt);
+	int (*load)(struct loader_opt *opt);
 };
 
 // DO NOT add "static" here
 #ifdef CONFIG_LOADER_MENU
 #define REGISTER_LOADER(key, routine, desc) \
 	const __USED__ __GBIOS_LOADER__ struct loader_opt __os_loader_##key = \
-		{.ckey = #key, .main = routine, .prompt = desc}
+		{.load_addr = (void *)CONFIG_OS_RAM_ADDR, .ckey = #key, .load = routine, .prompt = desc}
 #else
 #define REGISTER_LOADER(key, routine, desc) \
 	const __USED__ __GBIOS_LOADER__ struct loader_opt __os_loader_##key = \
-		{.ckey = #key, .main = routine}
+		{.load_addr = (void *)CONFIG_OS_RAM_ADDR, .ckey = #key, .load = routine}
 #endif

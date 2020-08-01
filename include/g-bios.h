@@ -2,8 +2,6 @@
 
 #include <autoconf.h>
 
-#define MKFOURCC(a, b, c, d)    (((a) << 24) | (b) << 16 | ((c) << 8) | (d))
-
 #ifndef __ASSEMBLY__
 #include <types.h>
 

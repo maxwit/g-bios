@@ -65,7 +65,7 @@ static int nand_loader(struct loader_opt *opt)
 	if (ret < 0)
 		return ret;
 
-	ret = nand_do_load(&nand, CONFIG_OS_NAND_START, VA(CONFIG_OS_START_MEM));
+	ret = nand_do_load(&nand, CONFIG_OS_NAND_START, opt->load_addr);
 
 	return ret;
 }
