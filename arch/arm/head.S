@@ -148,16 +148,15 @@ hang:
 	sub  pc, pc, #8
 
 banner:
-	.ascii "\n\r\n\rg-bios " __GBIOS_VER__
+	.ascii "\n\rg-bios " __GBIOS_VER__
 #ifdef CONFIG_VERBOSE
 	.ascii " (" __TIME__ ")"
 #endif
 	.asciz "\n\r"
-	.align 2
 
 #ifdef CONFIG_VERBOSE
 sdram_fmt:
 	.asciz "%p: %x, %x\n"
-	.align 2
 #endif
 
+	.align 2
