@@ -89,7 +89,7 @@ int load_os(char key)
 
 	for (loader = g_loader_begin; loader < g_loader_end; loader++) {
 #ifdef CONFIG_VERBOSE
-		printf("%c: 0x%x\n", loader->ckey[0], loader->main);
+		printf("%c: 0x%x\n", loader->ckey[0], loader->prompt);
 #endif
 
 		if (loader->ckey[0] == key) {
