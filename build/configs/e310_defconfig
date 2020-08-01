@@ -1,0 +1,7 @@
+CONFIG_ARCH = risc-v
+CONFIG_ARCH_VER = rv32imac
+CONFIG_PLAT = e310
+
+CONFIG_E310_UART = y
+
+CONFIG_CROSS_COMPILE = riscv-none-embed-

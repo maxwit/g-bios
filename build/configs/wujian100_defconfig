@@ -1,0 +1,7 @@
+CONFIG_ARCH = risc-v
+CONFIG_ARCH_VER = rv32imac
+CONFIG_PLAT = wujian100
+
+CONFIG_WUJIAN100_UART = y
+
+CONFIG_CROSS_COMPILE = riscv-none-embed-

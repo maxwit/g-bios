@@ -14,7 +14,10 @@ LD = $(CROSS_COMPILE)ld
 OBJDUMP = $(CROSS_COMPILE)objdump
 OBJCOPY = $(CROSS_COMPILE)objcopy
 
-CFLAGS = -ffreestanding -nostdinc -nostdlib -fno-builtin -I$(TOP_DIR)/include -include g-bios.h -D__GBIOS_VER__=\"$(MAJOR_VER).$(MINOR_VER)\" -D__LITTLE_ENDIAN -O2 -Wall -Werror -mno-thumb-interwork -march=$(CONFIG_ARCH_VER) -mabi=aapcs-linux
+CFLAGS = -ffreestanding -nostdinc -nostdlib -fno-builtin -I$(TOP_DIR)/include -include g-bios.h -D__GBIOS_VER__=\"$(MAJOR_VER).$(MINOR_VER)\" -D__LITTLE_ENDIAN -O2 -Wall -Werror -march=$(CONFIG_ARCH_VER) # -mabi=aapcs-linux
+ifeq ($(CONFIG_ARCH),arm)
+	CFLAGS += -mno-thumb-interwork
+endif
 
 #ifeq ($(CONFIG_VERBOSE),y)
 #	CFLAGS += -DCONFIG_VERBOSE
@@ -31,9 +34,7 @@ MAKEFLAGS = --no-print-directory
 export AS CC LD OBJDUMP OBJCOPY ASFLAGS CFLAGS LDFLAGS MAKEFLAGS
 export builtin-obj TOP_DIR
 
-# FIXME
-DEFCONFIG_PATH = build/configs/arm
-DEFCONFIG_LIST = $(shell cd $(DEFCONFIG_PATH) && ls *_defconfig)
+DEFCONFIG_LIST = $(shell ls build/configs)
 
 include build/rules/common.mk
 
@@ -71,7 +72,7 @@ help:
 $(DEFCONFIG_LIST):
 	@echo "configure for board \"$(@:%_defconfig=%)\""
 #	@./build/generate/defconfig.py $@
-	@cp -v build/configs/arm/$@ .config
+	@cp -v build/configs/$@ .config
 	@echo
 
 install: g-bios.bin
