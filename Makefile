@@ -55,7 +55,7 @@ g-bios.hex: g-bios.elf
 	$(OBJCOPY) -O ihex -S $< $@
 
 g-bios.elf: $(subdir-objs)
-	$(LD) $(LDFLAGS) -Tarch/$(CONFIG_ARCH)/$(CONFIG_PLAT)/mem.lds -T build/g-bios.lds $^ -o $@
+	$(LD) $(LDFLAGS) -Tarch/$(CONFIG_ARCH)/$(CONFIG_PLAT)/memory.ld -T build/sections.ld $^ -o $@
 
 $(dir-y):
 	@make $(obj_build)$@

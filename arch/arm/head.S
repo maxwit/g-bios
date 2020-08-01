@@ -3,6 +3,7 @@
  *
  */
 
+	.text
 	.global _start
 	.global hang
 
