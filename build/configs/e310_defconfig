@@ -4,4 +4,5 @@ CONFIG_PLAT = e310
 
 CONFIG_E310_UART = y
 
+CONFIG_DEBUG = y
 CONFIG_CROSS_COMPILE = riscv-none-embed-

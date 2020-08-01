@@ -19,6 +19,12 @@ ifeq ($(CONFIG_ARCH),arm)
 	CFLAGS += -mno-thumb-interwork
 endif
 
+ifeq ($(CONFIG_DEBUG),y)
+	CFLAGS += -g
+else
+
+endif
+
 #ifeq ($(CONFIG_VERBOSE),y)
 #	CFLAGS += -DCONFIG_VERBOSE
 #endif

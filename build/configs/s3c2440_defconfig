@@ -25,4 +25,5 @@ CONFIG_NAND_S3C24X = y
 
 # Compile
 # CONFIG_VERBOSE = y
+CONFIG_DEBUG = y
 CONFIG_CROSS_COMPILE = arm-none-eabi-

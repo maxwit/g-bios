@@ -24,21 +24,25 @@ if __name__ == '__main__':
 			str = str.strip()
 			str = str.replace(' ', '')
 			(key, value) = str.split('=')
-			if value == 'y':
-				fd_auto.write('#define ' + key + '\n')
-			else:
-				fd_auto.write('#define ' + key + ' ' + value + '\n')
+
 			if key == 'CONFIG_ARCH':
 				arch = value
 			elif key == 'CONFIG_PLAT':
 				plat = value
+			elif key in ['CONFIG_CROSS_COMPILE', 'CONFIG_DEBUG']:
+				continue
+
+			if value == 'y':
+				fd_auto.write('#define ' + key + '\n')
+			else:
+				fd_auto.write('#define ' + key + ' ' + value + '\n')
 		elif length == 1:
 			fd_auto.write(str)
 
 	if arch is None or plat is None:
 		raise Exception('pls check CONFIG_ARCH/CONFIG_PLAT definition!')
 
-	fd_auto.write('\n// device specific headers\n')
+	fd_auto.write('// device specific headers\n')
 	fd_auto.write('#include <' + arch +'/cpu.h>\n')
 	fd_auto.write('#include <' + arch + '/' + plat + '.h>\n')
 	fd_auto.close()
