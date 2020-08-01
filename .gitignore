@@ -9,3 +9,5 @@ include/autoconf.h
 *.pyc
 
 .vscode
+.cproject
+.project

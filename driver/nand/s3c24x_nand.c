@@ -22,6 +22,8 @@ int nand_init(struct nand_chip *nand)
 #elif defined(CONFIG_S3C6410)
 	s3c24x_nfc_writel(NF_CONF, 0x0214);
 	s3c24x_nfc_writel(NF_CONT, 0x1);
+#else
+#error "not supported yet!"
 #endif
 
 	nand->cmmd_port = VA(NAND_CTRL_BASE + NF_CMMD);
