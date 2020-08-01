@@ -1,5 +1,6 @@
 #include <types.h>
 
+// TODO: to be more pricise
 void __WEAK__ udelay(__u32 n)
 {
 	volatile __u32 m = n * (HCLK_RATE >> 20) >> 6;
