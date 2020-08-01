@@ -2,7 +2,7 @@
 	.global _start
 
 _start:
+	j hang
 
 hang:
-
-	.word 123
+	j hang

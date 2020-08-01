@@ -1,5 +1,4 @@
 #include <io.h>
-#include <arm/s3c6410.h>
 
 // init clock, gpio, wdt, etc.
 int soc_init(void)
@@ -70,7 +69,7 @@ int soc_init(void)
 #define TIME2CYCLE(t) (HCLK_RATE / 1000 * (t) / 1000000)
 #define TIME_SUB3(t)  ((t) <= 3 ? 0 : (t) - 3)
 
-int mem_init(void)
+int sdram_init(void)
 {
 	__u32 val;
 	__u32 rcd, rfc, rp;

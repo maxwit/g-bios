@@ -1,7 +1,0 @@
-CONFIG_ARCH = risc-v
-CONFIG_ARCH_VER = rv32imac
-CONFIG_PLAT = k210
-
-CONFIG_K210_UART = y
-
-CONFIG_CROSS_COMPILE = riscv-none-embed-

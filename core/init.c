@@ -13,8 +13,6 @@ static int load_os(char key);
 
 int main(void)
 {
-	int i;
-
 	read_cpu_id();
 
 #if 0
@@ -35,7 +33,11 @@ int main(void)
 	}
 #endif
 
-	for (i = 0; i < 0x100; i++) {
+#ifdef CONFIG_DEFAULT_LOADER
+	for (int i = 0; i < 0x100; i++) {
+#else
+	for (;;) {
+#endif
 		char key;
 
 		if (uart_rxbuf_count() > 0) {
@@ -68,8 +70,9 @@ int main(void)
 		udelay(0x1000);
 	}
 
+#ifdef CONFIG_DEFAULT_LOADER
 	load_os(CONFIG_DEFAULT_LOADER);
-
+#endif
 	return 'm';
 }
 

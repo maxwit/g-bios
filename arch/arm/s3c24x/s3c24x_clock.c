@@ -3,7 +3,6 @@
  */
 
 #include <io.h>
-#include <arm/s3c24x0.h>
 
 #define s3c24x0_wdt_writel(reg, val) \
 	writel(VA(WATCHDOG_BASE + (reg)), (val))
@@ -62,7 +61,7 @@ static const __u32 g_mem_conf[] = {
 };
 
 // to be improved
-int mem_init(void)
+int sdram_init(void)
 {
 	int i;
 

@@ -57,7 +57,9 @@ g-bios.hex: g-bios.elf
 g-bios.elf: $(subdir-objs)
 	$(LD) $(LDFLAGS) -Tarch/$(CONFIG_ARCH)/$(CONFIG_PLAT)/memory.ld -T build/sections.ld $^ -o $@
 
-$(dir-y):
+$(subdir-objs): $(dir-y)
+
+$(dir-y): include/autoconf.h
 	@make $(obj_build)$@
 
 .PHONY: $(dir-y)

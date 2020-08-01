@@ -119,7 +119,7 @@ static const struct omap4_ddr_config elpida2G_400M = {
 	.mr2		= 0x4
 };
 
-int mem_init(void)
+int sdram_init(void)
 {
 	writel(VA(DMM_BASE + DMM_LISA_MAP_0), 0x80720100);
 	writel(VA(DMM_BASE + DMM_LISA_MAP_2), 0x00000000);

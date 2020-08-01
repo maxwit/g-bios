@@ -64,8 +64,6 @@ handle_reset:
 	ldr sp, =(OMAP4_SRAM_BASE + OMAP4_SRAM_SIZE)
 #endif
 
-	bl   cpu_init
-
 	bl   soc_init
 
 	bl   uart_init
@@ -81,7 +79,8 @@ handle_reset:
 	cmp  r0, #0
 	bne  0b
 
-	bl   mem_init
+	@ SDRAM init
+	bl   sdram_init
 	@ 0: skipping memory testing and sp update
 	@ othersize: to verify memory R/W and use r0 to update sp
 	cmp  r0, #0

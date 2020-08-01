@@ -126,7 +126,7 @@ int soc_init(void)
 #define SDRC_READL(reg) readl(VA(SDRC_BASE + (reg)))
 #define SDRC_WRITEL(reg, word) writel(VA(SDRC_BASE + (reg)), (word))
 
-int mem_init(void)
+int sdram_init(void)
 {
 	int i;
 

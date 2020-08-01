@@ -2,9 +2,9 @@
  *  comment here
  */
 
-	.global  mem_init
+	.global  sdram_init
 
-mem_init:
+sdram_init:
 	stmfd sp!, {lr}
 #ifdef CONFIG_AT91SAM9261
 	ldr   r0, =AT91SAM926X_PA_MATRIX
