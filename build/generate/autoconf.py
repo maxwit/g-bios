@@ -43,7 +43,7 @@ if __name__ == '__main__':
 		raise Exception('pls check CONFIG_ARCH/CONFIG_PLAT definition!')
 
 	fd_auto.write('// device specific headers\n')
-	fd_auto.write('#include <' + arch +'/cpu.h>\n')
+	fd_auto.write('#include <cpu.h>\n')
 	fd_auto.write('#include <' + arch + '/' + plat + '.h>\n')
 	fd_auto.close()
 	fd_dot.close()

@@ -2,6 +2,8 @@
 
 #include <autoconf.h>
 
+#define GB_MAGIC  (('G' << 24) | ('b' << 16) | ('I' << 8) | 'o')
+
 #ifndef __ASSEMBLY__
 #include <types.h>
 

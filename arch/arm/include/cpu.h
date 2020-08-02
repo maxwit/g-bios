@@ -87,9 +87,3 @@
 #define fiq_enable()
 #endif
 #endif
-
-#define GB_MAGIC          (('G' << 24) | ('b' << 16) | ('I' << 8) | 'o')
-
-#define WITOS_MAGIC          (('w' << 24) | ('i' << 16) | ('O' << 8) | 'S')
-#define WITOS_MAGIC_OFFSET   32
-#define WITOS_SIZE_OFFSET    20

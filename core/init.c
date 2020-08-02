@@ -38,6 +38,8 @@ int main(void)
 #else
 	for (;;) {
 #endif
+
+#ifdef CONFIG_UART
 		char key;
 
 		if (uart_rxbuf_count() > 0) {
@@ -66,13 +68,12 @@ int main(void)
 			break;
 #endif
 		}
-
+#endif
 		udelay(0x1000);
 	}
 
-#ifdef CONFIG_DEFAULT_LOADER
 	load_os(CONFIG_DEFAULT_LOADER);
-#endif
+
 	return 'm';
 }
 

@@ -53,7 +53,7 @@ static inline void i2c_flush(void)
 	}
 }
 
-int i2c_write_byte (__u8 addr, __u8 reg, __u8 val)
+int i2c_write_byte(__u8 addr, __u8 reg, __u8 val)
 {
 	int errno = 0, to;
 	__u16 stat;
@@ -118,7 +118,7 @@ int i2c_write_byte (__u8 addr, __u8 reg, __u8 val)
 	return errno;
 }
 
-void i2c_disp_init (void)
+void i2c_disp_init(void)
 {
 	__u16 val;
 

@@ -14,7 +14,7 @@ LD = $(CROSS_COMPILE)ld
 OBJDUMP = $(CROSS_COMPILE)objdump
 OBJCOPY = $(CROSS_COMPILE)objcopy
 
-CFLAGS = -ffreestanding -nostdinc -nostdlib -fno-builtin -I$(TOP_DIR)/include -include g-bios.h -D__GBIOS_VER__=\"$(MAJOR_VER).$(MINOR_VER)\" -D__LITTLE_ENDIAN -O2 -Wall -Werror -march=$(CONFIG_ARCH_VER)
+CFLAGS = -std=gnu99 -ffreestanding -nostdinc -nostdlib -fno-builtin -I$(TOP_DIR)/include -I$(TOP_DIR)/arch/$(CONFIG_ARCH)/include -include g-bios.h -D__GBIOS_VER__=\"$(MAJOR_VER).$(MINOR_VER)\" -D__LITTLE_ENDIAN -O2 -Wall -Werror -march=$(CONFIG_ARCH_VER)
 
 ASFLAGS = $(CFLAGS) -D__ASSEMBLY__
 
@@ -47,7 +47,10 @@ DEFCONFIG_LIST = $(shell ls build/configs)
 
 include build/rules/common.mk
 
-dir-y := arch/$(CONFIG_ARCH) core driver lib
+dir-y := arch/$(CONFIG_ARCH) board/$(CONFIG_PLAT) core lib
+
+dir-$(CONFIG_UART) += driver/uart
+dir-$(CONFIG_NAND) += driver/nand
 
 subdir-objs := $(foreach n, $(dir-y), $(n)/$(builtin-obj))
 
@@ -65,7 +68,7 @@ g-bios.hex: g-bios.elf
 	$(OBJCOPY) -O ihex -S $< $@
 
 g-bios.elf: $(subdir-objs)
-	$(LD) $(LDFLAGS) -Tarch/$(CONFIG_ARCH)/$(CONFIG_PLAT)/memory.ld -T build/sections.ld $^ -o $@
+	$(LD) $(LDFLAGS) -T board/$(CONFIG_PLAT)/memory.ld -T build/sections.ld $^ -o $@
 
 $(subdir-objs): $(dir-y)
 
