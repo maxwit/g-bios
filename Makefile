@@ -14,9 +14,16 @@ LD = $(CROSS_COMPILE)ld
 OBJDUMP = $(CROSS_COMPILE)objdump
 OBJCOPY = $(CROSS_COMPILE)objcopy
 
-CFLAGS = -ffreestanding -nostdinc -nostdlib -fno-builtin -I$(TOP_DIR)/include -include g-bios.h -D__GBIOS_VER__=\"$(MAJOR_VER).$(MINOR_VER)\" -D__LITTLE_ENDIAN -O2 -Wall -Werror -march=$(CONFIG_ARCH_VER) # -mabi=aapcs-linux
+CFLAGS = -ffreestanding -nostdinc -nostdlib -fno-builtin -I$(TOP_DIR)/include -include g-bios.h -D__GBIOS_VER__=\"$(MAJOR_VER).$(MINOR_VER)\" -D__LITTLE_ENDIAN -O2 -Wall -Werror -march=$(CONFIG_ARCH_VER)
+
+ASFLAGS = $(CFLAGS) -D__ASSEMBLY__
+
 ifeq ($(CONFIG_ARCH),arm)
-	CFLAGS += -mno-thumb-interwork
+	CFLAGS += -mno-thumb-interwork -mabi=aapcs-linux
+	# LDFLAGS = -m armelf_eabi
+else ifeq ($(CONFIG_ARCH),risc-v)
+	CFLAGS += -mabi=ilp32
+	LDFLAGS += -m elf32lriscv
 endif
 
 ifeq ($(CONFIG_DEBUG),y)
@@ -28,10 +35,6 @@ endif
 #ifeq ($(CONFIG_VERBOSE),y)
 #	CFLAGS += -DCONFIG_VERBOSE
 #endif
-
-ASFLAGS = $(CFLAGS) -D__ASSEMBLY__
-
-# LDFLAGS = -m armelf_eabi
 
 builtin-obj = built-in.o
 
