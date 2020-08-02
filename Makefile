@@ -82,7 +82,7 @@ help:
 
 # FIXME
 $(DEFCONFIG_LIST):
-	@echo "configure for board \"$(@:%_defconfig=%)\""
+	@echo "configure for board '$(@:%_defconfig=%)'"
 #	@./build/generate/defconfig.py $@
 	@cp -v build/configs/$@ .config
 	@echo
