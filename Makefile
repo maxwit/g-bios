@@ -51,7 +51,8 @@ dir-y := arch/$(CONFIG_ARCH) core driver lib
 
 subdir-objs := $(foreach n, $(dir-y), $(n)/$(builtin-obj))
 
-all: include/autoconf.h $(dir-y) g-bios.bin g-bios.hex
+all: g-bios.elf g-bios.bin g-bios.hex
+	$(CROSS_COMPILE)size g-bios.elf
 	@echo
 
 include/autoconf.h: .config
