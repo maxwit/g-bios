@@ -1,1 +1,1 @@
-obj-y = clock.o
+obj-y = gpio.o

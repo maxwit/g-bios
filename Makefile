@@ -14,7 +14,7 @@ LD = $(CROSS_COMPILE)ld
 OBJDUMP = $(CROSS_COMPILE)objdump
 OBJCOPY = $(CROSS_COMPILE)objcopy
 
-CFLAGS = -std=gnu99 -ffreestanding -nostdinc -nostdlib -fno-builtin -I$(TOP_DIR)/include -I$(TOP_DIR)/arch/$(CONFIG_ARCH)/include -include g-bios.h -D__GBIOS_VER__=\"$(MAJOR_VER).$(MINOR_VER)\" -D__LITTLE_ENDIAN -O2 -Wall -Werror -march=$(CONFIG_ARCH_VER)
+CFLAGS = -std=gnu99 -ffreestanding -nostdinc -nostdlib -fno-builtin -I$(TOP_DIR)/include -I$(TOP_DIR)/arch/$(CONFIG_ARCH)/include -include g-bios.h -D__GBIOS_VER__=\"$(MAJOR_VER).$(MINOR_VER)\" -O2 -Wall -Werror -march=$(CONFIG_ARCH_VER)
 
 ASFLAGS = $(CFLAGS) -D__ASSEMBLY__
 
