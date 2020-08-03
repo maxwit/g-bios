@@ -1,0 +1,7 @@
+# Qemu ARM virt platform configuration
+
+CONFIG_ARCH = arm
+CONFIG_PLAT = armvirt
+CONFIG_ARCH_VER = armv6k
+
+CONFIG_DEBUG = y

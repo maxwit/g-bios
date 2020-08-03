@@ -1,5 +1,5 @@
 	.text
-	.global _start
+	.globl _start
 
 _start:
 	li a0, 0x10012000

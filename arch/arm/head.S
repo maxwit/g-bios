@@ -4,8 +4,8 @@
  */
 
 	.text
-	.global _start
-	.global hang
+	.globl _start
+	.globl hang
 
 #if defined(CONFIG_OMAP3) || defined(CONFIG_OMAP4)
 	.word (_end - _start)
@@ -28,6 +28,21 @@ _start:
 	.word GB_MAGIC
 	.word handle_irq
 	.word handle_fiq
+
+	.globl soc_init
+	.weak soc_init
+soc_init:
+	bx lr
+
+	.globl uart_init
+	.weak uart_init
+uart_init:
+	bx lr
+
+	.globl sdram_init
+	.weak sdram_init
+sdram_init:
+	bx lr
 
 handle_reset:
 	msr  cpsr, #(ARM_MODE_SVC | ARM_INT_MASK)
@@ -73,7 +88,7 @@ handle_reset:
 	ldrb r0, [r4], #1
 	b    1f
 0:
-	bl   uart_send_byte
+	bl   __io_putchar
 	ldrb r0, [r4], #1
 1:
 	cmp  r0, #0
@@ -144,7 +159,7 @@ handle_fiq:
 #endif
 
 hang:
-	bl   uart_send_byte
+	bl   __io_putchar
 	sub  pc, pc, #8
 
 banner:

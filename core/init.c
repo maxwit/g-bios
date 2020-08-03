@@ -7,9 +7,47 @@
 #include <loader.h>
 #include <uart/uart.h>
 
+#ifdef CONFIG_DEFAULT_LOADER
 extern struct loader_opt g_loader_begin[], g_loader_end[];
 
-static int load_os(char key);
+static inline void boot(struct loader_opt *loader)
+{
+	((void (*)())loader->load_addr)();
+}
+
+static int load_os(char key)
+{
+	int ret;
+	struct loader_opt *loader;
+
+	// case ignore
+	if ('A' <= key && key <= 'Z')
+		key += 'a' - 'A';
+
+	for (loader = g_loader_begin; loader < g_loader_end; loader++) {
+#ifdef CONFIG_VERBOSE
+		printf("%c: 0x%x\n", loader->ckey[0], loader->prompt);
+#endif
+
+		if (loader->ckey[0] == key) {
+#ifdef CONFIG_LOADER_MENU
+			// FIXME: prompt for RAM/ROM
+			printf("Loading from %s ...\n", loader->prompt);
+#endif
+			ret = loader->load(loader);
+			if (ret < 0)
+				return ret;
+
+			printf("\n"); // FIXME: to be removed
+			boot(loader);
+		}
+
+		// TODO: invalid key
+	}
+
+	return 0;
+}
+#endif
 
 int main(void)
 {
@@ -72,47 +110,11 @@ int main(void)
 #endif
 	}
 
+#ifdef CONFIG_DEFAULT_LOADER
 	load_os(CONFIG_DEFAULT_LOADER);
+#endif
 
 	return 'm';
-}
-
-static inline void boot(struct loader_opt *loader)
-{
-	((void (*)())loader->load_addr)();
-}
-
-int load_os(char key)
-{
-	int ret;
-	struct loader_opt *loader;
-
-	// case ignore
-	if ('A' <= key && key <= 'Z')
-		key += 'a' - 'A';
-
-	for (loader = g_loader_begin; loader < g_loader_end; loader++) {
-#ifdef CONFIG_VERBOSE
-		printf("%c: 0x%x\n", loader->ckey[0], loader->prompt);
-#endif
-
-		if (loader->ckey[0] == key) {
-#ifdef CONFIG_LOADER_MENU
-			// FIXME: prompt for RAM/ROM
-			printf("Loading from %s ...\n", loader->prompt);
-#endif
-			ret = loader->load(loader);
-			if (ret < 0)
-				return ret;
-
-			printf("\n"); // FIXME: to be removed
-			boot(loader);
-		}
-
-		// TODO: invalid key
-	}
-
-	return 0;
 }
 
 #ifdef CONFIG_RAM_LOADER

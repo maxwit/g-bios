@@ -5,7 +5,15 @@ MINOR_VER = 2
 
 IMG_DIR := $(CONFIG_IMAGE_PATH)
 
-CROSS_COMPILE = $(CONFIG_CROSS_COMPILE)
+ifeq ($(CONFIG_CROSS_COMPILE),)
+	ifeq ($(CONFIG_ARCH), arm)
+		CROSS_COMPILE = arm-none-eabi-
+	else ifeq ($(CONFIG_ARCH), risc-v)
+		CROSS_COMPILE = riscv64-unknown-elf-
+	endif
+else
+	CROSS_COMPILE = $(CONFIG_CROSS_COMPILE)
+endif
 
 AS = $(CROSS_COMPILE)as
 CC = $(CROSS_COMPILE)gcc
@@ -14,8 +22,6 @@ OBJDUMP = $(CROSS_COMPILE)objdump
 OBJCOPY = $(CROSS_COMPILE)objcopy
 
 CFLAGS = -std=gnu99 -ffreestanding -nostdinc -nostdlib -fno-builtin -Iinclude -Iarch/$(CONFIG_ARCH)/include -include g-bios.h -D__GBIOS_VER__=\"$(MAJOR_VER).$(MINOR_VER)\" -O2 -Wall -Werror -march=$(CONFIG_ARCH_VER)
-
-ASFLAGS = $(CFLAGS) -D__ASSEMBLY__
 
 ifeq ($(CONFIG_ARCH),arm)
 	CFLAGS += -mno-thumb-interwork -mabi=aapcs-linux
@@ -27,9 +33,9 @@ endif
 
 ifeq ($(CONFIG_DEBUG),y)
 	CFLAGS += -g
-else
-
 endif
+
+ASFLAGS = $(CFLAGS) -D__ASSEMBLY__
 
 #ifeq ($(CONFIG_VERBOSE),y)
 #	CFLAGS += -DCONFIG_VERBOSE
