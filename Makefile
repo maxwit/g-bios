@@ -47,10 +47,7 @@ DEFCONFIG_LIST = $(shell ls build/configs)
 
 include build/rules/common.mk
 
-dir-y := arch/$(CONFIG_ARCH) board/$(CONFIG_PLAT) core lib
-
-dir-$(CONFIG_UART) += driver/uart
-dir-$(CONFIG_NAND) += driver/nand
+dir-y := arch board driver core lib
 
 subdir-objs := $(foreach n, $(dir-y), $(n)/$(builtin-obj))
 

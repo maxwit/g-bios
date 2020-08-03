@@ -1,10 +1,5 @@
 #include <io.h>
-#include <arm/omap3.h>
-
-// FIXME: to be moved to board configuration
-#define OSC_SYS_CLK  MHz(26)
-#define OSC_DIV      2
-#define SYS_CLK      (OSC_SYS_CLK / SYS_CLK)
+#include <omap3.h>
 
 int soc_init(void)
 {

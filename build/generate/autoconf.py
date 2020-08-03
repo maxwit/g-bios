@@ -44,6 +44,6 @@ if __name__ == '__main__':
 
 	fd_auto.write('// device specific headers\n')
 	fd_auto.write('#include <cpu.h>\n')
-	fd_auto.write('#include <' + arch + '/' + plat + '.h>\n')
+	# fd_auto.write('#include <' + arch + '/' + plat + '.h>\n')
 	fd_auto.close()
 	fd_dot.close()

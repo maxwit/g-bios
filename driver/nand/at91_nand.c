@@ -4,6 +4,7 @@
 
 #include <io.h>
 #include <flash/nand.h>
+#include <at91.h>
 
 int at91_nand_ready(struct nand_chip *nand)
 {

@@ -3,6 +3,7 @@
  */
 
 #include <io.h>
+#include <s3c24x.h>
 
 #define s3c24x0_wdt_writel(reg, val) \
 	writel(VA(WATCHDOG_BASE + (reg)), (val))

@@ -68,8 +68,8 @@ int main(void)
 			break;
 #endif
 		}
-#endif
 		udelay(0x1000);
+#endif
 	}
 
 	load_os(CONFIG_DEFAULT_LOADER);

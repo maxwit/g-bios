@@ -1,6 +1,6 @@
 #pragma once
 
-#include <arm/omap3_register.h>
+#include <omap3_register.h>
 
 #define KHz(n) (1000 * (n))
 #define MHz(n) (1000 * KHz(n))
@@ -13,7 +13,7 @@
 
 #define ATAG_BASE   SDRAM_BASE
 
-#define MPU_CLK    MHz(720)
+#define MPU_CLK    MHz(720)  // FIXME: to be calculated
 #define L3_CLK     MHz(133)
 #define L4_CLK     MHz(66.5)
 #define HCLK_RATE  L3_CLK

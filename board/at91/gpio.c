@@ -1,4 +1,5 @@
 #include <io.h>
+#include <at91.h>
 
 int at91_clock_enable(int nClockID)
 {

@@ -1,6 +1,7 @@
 #include <io.h>
 #include <delay.h>
 #include <uart/uart.h>
+#include <s3c24x.h>
 
 #define UART_BASE(num) VA((UART0_BASE + (num) * 0x4000))
 

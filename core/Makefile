@@ -1,4 +1,4 @@
-obj-y = init.o delay.o
+obj-y = init.o
 
 obj-$(CONFIG_NAND) += nand_loader.o
 obj-$(CONFIG_KERMIT) += kermit_loader.o

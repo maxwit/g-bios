@@ -1,5 +1,6 @@
 #include <io.h>
 #include <flash/nand.h>
+#include <s3c24x.h>
 
 #define s3c24x_nfc_readl(reg) \
 	readl(VA(NAND_CTRL_BASE + reg))

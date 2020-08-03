@@ -4,6 +4,7 @@
 
 #include <io.h>
 #include <uart/uart.h>
+#include <at91.h>
 
 #define at91_uart_readb(reg)        readb(VA(AT91SAM926X_PA_DBGU + reg))
 #define at91_uart_readl(reg)        readl(VA(AT91SAM926X_PA_DBGU + reg))

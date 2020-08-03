@@ -1,1 +1,1 @@
-obj-y = clock.o
+obj-y = clock.o delay.o

@@ -1,9 +1,9 @@
 #pragma once
 
 #ifdef CONFIG_AT91SAM9261
-#include <arm/at91sam9261_register.h>
+#include <at91sam9261_register.h>
 #elif defined(CONFIG_AT91SAM9263)
-#include <arm/at91sam9263_register.h>
+#include <at91sam9263_register.h>
 #else
 #error "AT91 platform not defined!"
 #endif

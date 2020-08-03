@@ -2,6 +2,8 @@
  *  comment here
  */
 
+#include <at91.h>
+
 	.global  sdram_init
 
 sdram_init:

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <arm/s3c24x0_register.h>
+#include <s3c24x0_register.h>
 
 #define UART_NUM         3
 
