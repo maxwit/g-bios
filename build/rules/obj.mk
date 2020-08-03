@@ -2,7 +2,12 @@ include .config
 
 include build/rules/common.mk
 
-path := $(patsubst %/,%,$(path))
+ifeq ($(path), $(filter $(path), board/$(CONFIG_PLAT) driver))
+	CFLAGS += -Iboard/$(CONFIG_PLAT)/include
+	ASFLAGS += -Iboard/$(CONFIG_PLAT)/include
+endif
+
+# path := $(patsubst %/,%,$(path))
 include $(path)/Makefile
 
 %.o: %.c

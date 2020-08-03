@@ -3,7 +3,6 @@
 MAJOR_VER = 1
 MINOR_VER = 2
 
-TOP_DIR := $(shell pwd)
 IMG_DIR := $(CONFIG_IMAGE_PATH)
 
 CROSS_COMPILE = $(CONFIG_CROSS_COMPILE)
@@ -14,7 +13,7 @@ LD = $(CROSS_COMPILE)ld
 OBJDUMP = $(CROSS_COMPILE)objdump
 OBJCOPY = $(CROSS_COMPILE)objcopy
 
-CFLAGS = -std=gnu99 -ffreestanding -nostdinc -nostdlib -fno-builtin -I$(TOP_DIR)/include -I$(TOP_DIR)/arch/$(CONFIG_ARCH)/include -include g-bios.h -D__GBIOS_VER__=\"$(MAJOR_VER).$(MINOR_VER)\" -O2 -Wall -Werror -march=$(CONFIG_ARCH_VER)
+CFLAGS = -std=gnu99 -ffreestanding -nostdinc -nostdlib -fno-builtin -Iinclude -Iarch/$(CONFIG_ARCH)/include -include g-bios.h -D__GBIOS_VER__=\"$(MAJOR_VER).$(MINOR_VER)\" -O2 -Wall -Werror -march=$(CONFIG_ARCH_VER)
 
 ASFLAGS = $(CFLAGS) -D__ASSEMBLY__
 
@@ -41,13 +40,13 @@ builtin-obj = built-in.o
 MAKEFLAGS = --no-print-directory
 
 export AS CC LD OBJDUMP OBJCOPY ASFLAGS CFLAGS LDFLAGS MAKEFLAGS
-export builtin-obj TOP_DIR
+export builtin-obj
 
 DEFCONFIG_LIST = $(shell ls build/configs)
 
 include build/rules/common.mk
 
-dir-y := arch board driver core lib
+dir-y := arch/$(CONFIG_ARCH) board/$(CONFIG_PLAT) driver core lib
 
 subdir-objs := $(foreach n, $(dir-y), $(n)/$(builtin-obj))
 
