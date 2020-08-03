@@ -4,60 +4,46 @@
 #   $0 .config autoconf.h
 
 import os, sys
-import mw_socs #FIXME: to be removed
 
-def get_plat():
-	for soc in mw_socs.socs_info.keys():
-		ret = os.system('grep CONFIG_' + soc + ' .config > /dev/null 2>&1')
-		if ret == 0:
-			soc_list = mw_socs.socs_info[soc].split(' ')
-			return soc_list[5] + ' ' + soc_list[0]
-	return "null"
-
-# TODO: filter out some options, i.e. CONFIG_COMPILE
-def generate_autoconf(dot_conf, auto_conf, plat_info):
-	fd1 = open(dot_conf, 'r')
-	fd2 = open(auto_conf, 'w')
-	plat_info = plat_info.split()
-	plat = plat_info[0]	
-	arch = plat_info[1]
-	# check
-
-	fd2.write("#pragma once\n//\n")
-
-	while 1:
-		str = fd1.readline()
-		length = len(str)
-		if length == 0:
-			break;
-		if length > 1 and str[0] != '#':
-			str = str.replace(' ', '')
-			str = str.split('=')
-			if len(str) == 2 and str[1] == "y\n":
-				fd2.write('#define ' + str[0] + '\n')
-			else:
-				fd2.write('#define ' + str[0] + ' ' + str[1]);
-		elif length == 1:
-			fd2.write(str);
-
-	fd2.write('\n//\n')
-	fd2.write("#include <" + arch +"/cpu.h>\n")
-	fd2.write("#include <" + arch + '/' + plat + ".h>\n")
-	fd2.close();
-	fd1.close();
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
 	if len(sys.argv) != 3:
-		print("usage: " + sys.argv[0] + ' .config autoconf.h')
+		print('usage: ' + sys.argv[0] + ' .config autoconf.h')
 		sys.exit()
 
-	dot_config = sys.argv[1]
-	auto_config= sys.argv[2]
+	fd_dot = open(sys.argv[1], 'r')
+	fd_auto = open(sys.argv[2], 'w')
 
-	plat = get_plat()
-	if plat == "null":
-		print("Platform not specified!")
-		sys.exit()
+	fd_auto.write('#pragma once\n\n')
 
-	generate_autoconf(dot_config, auto_config, plat)
+	# TODO: filter out some options, i.e. CONFIG_COMPILE
+	arch = None
+	plat = None
+	for str in fd_dot:
+		length = len(str)
+		if length > 1 and str[0] != '#':
+			str = str.strip()
+			str = str.replace(' ', '')
+			(key, value) = str.split('=')
+
+			if key == 'CONFIG_ARCH':
+				arch = value
+			elif key == 'CONFIG_PLAT':
+				plat = value
+			elif key in ['CONFIG_CROSS_COMPILE', 'CONFIG_DEBUG']:
+				continue
+
+			if value == 'y':
+				fd_auto.write('#define ' + key + '\n')
+			else:
+				fd_auto.write('#define ' + key + ' ' + value + '\n')
+		elif length == 1:
+			fd_auto.write(str)
+
+	if arch is None or plat is None:
+		raise Exception('pls check CONFIG_ARCH/CONFIG_PLAT definition!')
+
+	fd_auto.write('// device specific headers\n')
+	fd_auto.write('#include <cpu.h>\n')
+	fd_auto.write('#include <' + arch + '/' + plat + '.h>\n')
+	fd_auto.close()
+	fd_dot.close()

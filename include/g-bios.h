@@ -2,15 +2,16 @@
 
 #include <autoconf.h>
 
+#define GB_MAGIC  (('G' << 24) | ('b' << 16) | ('I' << 8) | 'o')
+
 #ifndef __ASSEMBLY__
 #include <types.h>
 
 #define VA(x) ((void *)(x))
 
-int cpu_init(void);
 int soc_init(void);
 int uart_init(void);
-int mem_init(void);
+int sdram_init(void);
 
 unsigned long read_cpu_id(void);
 

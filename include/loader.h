@@ -1,7 +1,5 @@
 #pragma once
 
-#include <types.h>
-
 // to be removed
 #define LM_NAND      'n'
 #define LM_KERMIT    'k'
@@ -31,3 +29,7 @@ struct loader_opt {
 	const __USED__ __GBIOS_LOADER__ struct loader_opt __os_loader_##key = \
 		{.load_addr = (void *)CONFIG_OS_RAM_ADDR, .ckey = #key, .load = routine}
 #endif
+
+#define WITOS_MAGIC          (('w' << 24) | ('i' << 16) | ('O' << 8) | 'S')
+#define WITOS_MAGIC_OFFSET   32
+#define WITOS_SIZE_OFFSET    20

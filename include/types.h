@@ -1,10 +1,12 @@
 #pragma once
 
 #ifdef __arm__
-#include <arm/types.h>
-#else
-#include <arm/types.h> // FIXME
-// #error "arch not supported yet"
+#define WORD_SIZE              sizeof(long)
+#define WORD_ALIGN_UP(addr)    (((addr) + WORD_SIZE - 1) & ~(WORD_SIZE - 1))
+#define WORD_ALIGN_DOWN(addr)  ((addr) & ~(WORD_SIZE - 1))
+#define DWORD_SIZE             (WORD_SIZE << 1)
+#define WORD_BITS              (WORD_SIZE * 8)
+// #elif defined(__riscv)
 #endif
 
 typedef unsigned char  __u8, byte;
@@ -17,7 +19,7 @@ typedef signed int     ssize_t;
 typedef unsigned short __le16;
 typedef unsigned int   __le32;
 
-typedef enum {false, true} bool;
+// typedef enum {false, true} bool;
 
 #define cpu_to_le16(x)         (x)
 #define le16_to_cpu(x)         (x)

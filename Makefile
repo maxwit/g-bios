@@ -14,15 +14,27 @@ LD = $(CROSS_COMPILE)ld
 OBJDUMP = $(CROSS_COMPILE)objdump
 OBJCOPY = $(CROSS_COMPILE)objcopy
 
-CFLAGS = -ffreestanding -nostdinc -nostdlib -fno-builtin -I$(TOP_DIR)/include -include g-bios.h -D__GBIOS_VER__=\"$(MAJOR_VER).$(MINOR_VER)\" -D__LITTLE_ENDIAN -O2 -Wall -Werror -mno-thumb-interwork -march=$(CONFIG_ARCH_VER) -mabi=aapcs-linux
+CFLAGS = -std=gnu99 -ffreestanding -nostdinc -nostdlib -fno-builtin -I$(TOP_DIR)/include -I$(TOP_DIR)/arch/$(CONFIG_ARCH)/include -include g-bios.h -D__GBIOS_VER__=\"$(MAJOR_VER).$(MINOR_VER)\" -O2 -Wall -Werror -march=$(CONFIG_ARCH_VER)
+
+ASFLAGS = $(CFLAGS) -D__ASSEMBLY__
+
+ifeq ($(CONFIG_ARCH),arm)
+	CFLAGS += -mno-thumb-interwork -mabi=aapcs-linux
+	# LDFLAGS = -m armelf_eabi
+else ifeq ($(CONFIG_ARCH),risc-v)
+	CFLAGS += -mabi=ilp32
+	LDFLAGS += -m elf32lriscv
+endif
+
+ifeq ($(CONFIG_DEBUG),y)
+	CFLAGS += -g
+else
+
+endif
 
 #ifeq ($(CONFIG_VERBOSE),y)
 #	CFLAGS += -DCONFIG_VERBOSE
 #endif
-
-ASFLAGS = $(CFLAGS) -D__ASSEMBLY__
-
-# LDFLAGS = -m armelf_eabi
 
 builtin-obj = built-in.o
 
@@ -31,17 +43,19 @@ MAKEFLAGS = --no-print-directory
 export AS CC LD OBJDUMP OBJCOPY ASFLAGS CFLAGS LDFLAGS MAKEFLAGS
 export builtin-obj TOP_DIR
 
-# FIXME
-DEFCONFIG_PATH = build/configs/arm
-DEFCONFIG_LIST = $(shell cd $(DEFCONFIG_PATH) && ls *_defconfig)
+DEFCONFIG_LIST = $(shell ls build/configs)
 
 include build/rules/common.mk
 
-dir-y := arch/$(CONFIG_ARCH) core driver lib
+dir-y := arch/$(CONFIG_ARCH) board/$(CONFIG_PLAT) core lib
+
+dir-$(CONFIG_UART) += driver/uart
+dir-$(CONFIG_NAND) += driver/nand
 
 subdir-objs := $(foreach n, $(dir-y), $(n)/$(builtin-obj))
 
-all: include/autoconf.h $(dir-y) g-bios.bin g-bios.hex
+all: g-bios.elf g-bios.bin g-bios.hex
+	$(CROSS_COMPILE)size g-bios.elf
 	@echo
 
 include/autoconf.h: .config
@@ -54,9 +68,11 @@ g-bios.hex: g-bios.elf
 	$(OBJCOPY) -O ihex -S $< $@
 
 g-bios.elf: $(subdir-objs)
-	$(LD) $(LDFLAGS) -Tarch/$(CONFIG_ARCH)/$(CONFIG_PLAT)/mem.lds -T build/g-bios.lds $^ -o $@
+	$(LD) $(LDFLAGS) -T board/$(CONFIG_PLAT)/memory.ld -T build/sections.ld $^ -o $@
 
-$(dir-y):
+$(subdir-objs): $(dir-y)
+
+$(dir-y): include/autoconf.h
 	@make $(obj_build)$@
 
 .PHONY: $(dir-y)
@@ -69,9 +85,9 @@ help:
 
 # FIXME
 $(DEFCONFIG_LIST):
-	@echo "configure for board \"$(@:%_defconfig=%)\""
+	@echo "configure for board '$(@:%_defconfig=%)'"
 #	@./build/generate/defconfig.py $@
-	@cp -v build/configs/arm/$@ .config
+	@cp -v build/configs/$@ .config
 	@echo
 
 install: g-bios.bin

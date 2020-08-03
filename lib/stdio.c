@@ -1,14 +1,16 @@
 #include <uart/uart.h>
 
-#define BUF_LEN 10
+#define BUF_LEN 32 // FIXME
 
-void putchar(char ch)
+__WEAK__ void __io_putchar(char ch)
 {
+#ifdef CONFIG_UART
 	uart_send_byte(ch);
-	if ('\n' == ch)
-		uart_send_byte('\r');
-	else if ('\r' == ch)
-		uart_send_byte('\n');
+	// if ('\n' == ch)
+	// 	uart_send_byte('\r');
+	// else if ('\r' == ch)
+	// 	uart_send_byte('\n');
+#endif
 }
 
 static const char *int_to_hex_str(__u32 val, char str[])
@@ -70,16 +72,16 @@ int printf(const char *fmt, ...)
 
 			switch (*p) {
 			case 'c':
-				uart_send_byte((char)*arg);
+				__io_putchar(*(char *)arg);
 				break;
 
 			case 'p':
-				uart_send_byte('0');
-				uart_send_byte('x');
+				__io_putchar('0');
+				__io_putchar('x');
 			case 'x':
 				q = int_to_hex_str(*arg, buf);
 				while (q < buf + BUF_LEN) {
-					uart_send_byte(*q);
+					__io_putchar(*q);
 					q++;
 				}
 				break;
@@ -97,9 +99,9 @@ int printf(const char *fmt, ...)
 			case 's':
 				q = (const char *)*arg;
 				while (*q) {
-					uart_send_byte(*q);
+					__io_putchar(*q);
 					if ('\n' == *q)
-						uart_send_byte('\r');
+						__io_putchar('\r');
 
 					q++;
 				}
@@ -112,9 +114,9 @@ int printf(const char *fmt, ...)
 
 			arg++;
 		} else {
-			uart_send_byte(*p);
+			__io_putchar(*p);
 			if ('\n' == *p)
-				uart_send_byte('\r');
+				__io_putchar('\r');
 		}
 	}
 
