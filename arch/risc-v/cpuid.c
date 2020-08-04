@@ -1,4 +1,6 @@
 unsigned long read_cpu_id(void)
 {
-    return 0;
+    extern unsigned long __stack_base;
+
+    return __stack_base;
 }

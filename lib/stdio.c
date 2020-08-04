@@ -2,16 +2,16 @@
 
 #define BUF_LEN 32 // FIXME
 
-// __WEAK__ void __io_putchar(char ch)
-// {
-// #ifdef CONFIG_UART
-// 	uart_send_byte(ch);
-// 	// if ('\n' == ch)
-// 	// 	uart_send_byte('\r');
-// 	// else if ('\r' == ch)
-// 	// 	uart_send_byte('\n');
-// #endif
-// }
+__WEAK__ void __io_putchar(char ch)
+{
+#ifdef CONFIG_UART
+	uart_send_byte(ch);
+	// if ('\n' == ch)
+	// 	uart_send_byte('\r');
+	// else if ('\r' == ch)
+	// 	uart_send_byte('\n');
+#endif
+}
 
 static const char *int_to_hex_str(__u32 val, char str[])
 {

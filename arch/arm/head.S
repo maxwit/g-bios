@@ -42,8 +42,11 @@ handle_reset:
 #endif
 
 	bl   system_init
+	cmp  r0, #0
+	bne  hang
 
 	bl   main
+
 	b    hang
 
 #if 1
