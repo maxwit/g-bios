@@ -1,5 +1,6 @@
 #include <io.h>
-#include <arm/omap4.h>
+#include <init.h>
+#include <omap4.h>
 
 #if 0
 #define OSC_SYS_CLK  MHz(26)
@@ -96,7 +97,7 @@ static void core_dpll_init(const struct dpll_desc *dpll)
 	writel(VA(CM_MEMIF_CLKSTCTRL), val | 3);
 }
 
-int soc_init(void)
+static __init int omap4_init(void)
 {
 #if 0
 	// disable WDT
@@ -133,3 +134,5 @@ int soc_init(void)
 
 	return 0;
 }
+
+plat_init(omap4_init);

@@ -2,6 +2,8 @@
 
 #include <types.h>
 
+void __io_putchar(char ch);
+
 int putchar(int);
 
 char *gets(char *);

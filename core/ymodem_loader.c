@@ -15,12 +15,10 @@
 // FIXME: reset fifo
 static void uart_clear_buff()
 {
-	__u8  tmp;
-	int ret;
-
 	while (1) {
-		ret = uart_recv_byte_timeout(&tmp, MODEM_TIMEOUT);
+		__u8  tmp;
 
+		int ret = uart_recv_byte_timeout(&tmp, MODEM_TIMEOUT);
 		if (ret < 0)
 			break;
 	}

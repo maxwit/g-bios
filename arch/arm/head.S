@@ -29,98 +29,20 @@ _start:
 	.word handle_irq
 	.word handle_fiq
 
-	.globl soc_init
-	.weak soc_init
-soc_init:
-	bx lr
-
-	.globl uart_init
-	.weak uart_init
-uart_init:
-	bx lr
-
-	.globl sdram_init
-	.weak sdram_init
-sdram_init:
-	bx lr
-
 handle_reset:
 	msr  cpsr, #(ARM_MODE_SVC | ARM_INT_MASK)
 
-@ FIXME
-#if 0
 	@ init default sp
-#if defined(CONFIG_S3C2410) || defined(CONFIG_S3C2440)
-	mov  sp, #0x1000
-	ldr  r0, [sp, #-4]
-	mvn  r1, r0
-	str  r1, [sp, #-4]
-	ldr  r0, [sp, #-4]
-	cmp  r0, r1
-	addne sp, sp, #0x40000000
-#elif defined(CONFIG_AT91SAM9261) || defined(CONFIG_AT91SAM9263)
-	mov  r0, #0x10000
-#endif
-#endif
+	ldr sp, =__stack_base
+	@ TODO: verify the stack memory
 
-#ifdef CONFIG_S3C6410
-	ldr r0, =0x70000013
-	mcr p15, 0, r0, c15, c2, 4
-
-	@disable watchdog
-	ldr r0, =WATCHDOG_BASE
-	ldrh r1, [r0, #WTCON]
-	bic r1, #0xff
-	strh r1, [r0, #WTCON]
-#elif defined(CONFIG_OMAP3)
+#ifdef CONFIG_OMAP3
 	mov r12, #0x1		@ to invalidate L2
 	.word 0xE1600070	@ Call SMI monitor
-#elif defined(CONFIG_OMAP4)
-	ldr sp, =(OMAP4_SRAM_BASE + OMAP4_SRAM_SIZE)
 #endif
 
-	bl   soc_init
+	bl   system_init
 
-	bl   uart_init
-
-	@ show banner
-	adr  r4, banner
-	ldrb r0, [r4], #1
-	b    1f
-0:
-	bl   __io_putchar
-	ldrb r0, [r4], #1
-1:
-	cmp  r0, #0
-	bne  0b
-
-	@ SDRAM init
-	bl   sdram_init
-	@ 0: skipping memory testing and sp update
-	@ othersize: to verify memory R/W and use r0 to update sp
-	cmp  r0, #0
-	beq  Lm
-	@ stack init
-	mov  sp, r0
-	@ and fp ...
-
-	@ SDRAM testing
-	ldr  r2, [sp, #-4]
-	mvn  r0, r2
-	str  r0, [sp, #-4]
-	ldr  r3, [sp, #-4]
-	cmp  r0, r3
-	beq  Lm
-#ifdef CONFIG_VERBOSE
-	sub  r1, sp, #4
-	adr  r0, sdram_fmt
-	bl   printf
-#endif
-	mov  r0, #'M'
-	b    hang
-
-Lm:
-	@ SDRAM is fully functional now :)
 	bl   main
 	b    hang
 
@@ -161,17 +83,5 @@ handle_fiq:
 hang:
 	bl   __io_putchar
 	sub  pc, pc, #8
-
-banner:
-	.ascii "\n\rg-bios " __GBIOS_VER__
-#ifdef CONFIG_VERBOSE
-	.ascii " (" __TIME__ ")"
-#endif
-	.asciz "\n\r"
-
-#ifdef CONFIG_VERBOSE
-sdram_fmt:
-	.asciz "%p: %x, %x\n"
-#endif
 
 	.align 2

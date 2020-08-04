@@ -1,8 +1,10 @@
 #include <io.h>
 #include <delay.h>
+#include <init.h>
 #include <uart/uart.h>
+#include <s3c64x.h>
 
-static int s3c6410_uart_init(void)
+static __init int s3c6410_uart_init(void)
 {
 	__u32 val;
 
@@ -61,6 +63,7 @@ static void s3c6410_uart_send_byte(__u8 b)
 	s3c_uart_writeb(UTXH, b);
 }
 
-DECLARE_UART_INIT(s3c6410_uart_init);
+stdio_init(s3c6410_uart_init);
+
 DECLARE_UART_RECV(s3c6410_uart_recv_byte);
 DECLARE_UART_SEND(s3c6410_uart_send_byte);

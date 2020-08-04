@@ -1,11 +1,25 @@
 #include <io.h>
+#include <init.h>
+#include <s3c64x.h>
 
 // init clock, gpio, wdt, etc.
-int soc_init(void)
+static __init int s3c_init(void)
 {
-	__u32 val = S3C6410_SRAM_BASE + S3C6410_SRAM_SIZE;
+	__u32 val;
 
-	asm volatile ("mov sp, %0\n\t"::"r"(val));
+	// ldr r0, =0x70000013
+	// mcr p15, 0, r0, c15, c2, 4
+	val = 0x70000013;
+	asm volatile ("mrc  p15, 0, %0, c0, c0, 0" :: "r"(val));
+
+	// disable watchdog
+	// ldr r0, =WATCHDOG_BASE
+	// ldrh r1, [r0, #WTCON]
+	// bic r1, #0xff
+	// strh r1, [r0, #WTCON]
+	val = readw(VA(WATCHDOG_BASE + WTCON));
+	val &= ~0xff;
+	writew(VA(WATCHDOG_BASE + WTCON), val);
 
 	// configure GPIO
 #ifdef CONFIG_VERBOSE
@@ -44,6 +58,8 @@ int soc_init(void)
 	return 0;
 }
 
+plat_init(s3c_init);
+
 #define ddr_write(reg, val) writel(VA(DRAMC_BASE + reg), val)
 #define ddr_read(reg)       readl(VA(DRAMC_BASE + reg))
 
@@ -69,7 +85,7 @@ int soc_init(void)
 #define TIME2CYCLE(t) (HCLK_RATE / 1000 * (t) / 1000000)
 #define TIME_SUB3(t)  ((t) <= 3 ? 0 : (t) - 3)
 
-int sdram_init(void)
+static __init int s3c_sdram_init(void)
 {
 	__u32 val;
 	__u32 rcd, rfc, rp;
@@ -124,3 +140,5 @@ int sdram_init(void)
 
 	return SDRAM_BASE + SDRAM_SIZE;
 }
+
+sdram_init(s3c_sdram_init);

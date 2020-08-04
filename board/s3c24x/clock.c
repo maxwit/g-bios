@@ -3,6 +3,7 @@
  */
 
 #include <io.h>
+#include <init.h>
 #include <s3c24x.h>
 
 #define s3c24x0_wdt_writel(reg, val) \
@@ -14,7 +15,7 @@
 #define s3c24x0_memcon_writel(reg, val) \
 	writel(VA(MEMCON_BASE + (reg)), (val))
 
-int soc_init(void)
+static __init int s3c_init(void)
 {
 	asm volatile ("mov sp, %0\n"::"i"(S3C24XX_SRAM_SIZE));
 
@@ -28,6 +29,8 @@ int soc_init(void)
 
 	return 0;
 }
+
+plat_init(s3c_init);
 
 static const __u32 g_mem_conf[] = {
 #ifdef CONFIG_S3C2410
@@ -62,7 +65,7 @@ static const __u32 g_mem_conf[] = {
 };
 
 // to be improved
-int sdram_init(void)
+static __init int s3c_sdram_init(void)
 {
 	int i;
 
@@ -74,3 +77,4 @@ int sdram_init(void)
 	return SDRAM_BASE + SDRAM_SIZE;
 }
 
+sdram_init(s3c_sdram_init);

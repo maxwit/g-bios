@@ -1,5 +1,6 @@
 #include <io.h>
 #include <delay.h>
+#include <init.h>
 #include <uart/uart.h>
 #include <omap3.h>
 
@@ -22,7 +23,7 @@ __u32 uart_rxbuf_count()
 	return readb(VA(UART_BASE + LSR_REG)) & 0x1;
 }
 
-static int omap3_uart_init(void)
+static __init int omap3_uart_init(void)
 {
 	__u8  byte;
 	__u16 half;
@@ -233,6 +234,7 @@ static int omap3_uart_init(void)
 	return 0;
 }
 
-DECLARE_UART_INIT(omap3_uart_init);
+stdio_init(omap3_uart_init);
+
 DECLARE_UART_SEND(omap3_uart_send_byte);
 DECLARE_UART_RECV(omap3_uart_recv_byte);

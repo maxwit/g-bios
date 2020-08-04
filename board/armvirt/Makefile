@@ -1,1 +1,1 @@
-obj-y = gpio.o
+obj-y = plat.o

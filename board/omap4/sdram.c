@@ -1,6 +1,6 @@
 #include <io.h>
 #include <delay.h>
-#include <stdio.h>
+#include <init.h>
 
 #define EMIF_READL(reg) \
 	readl(emif_base + (reg))
@@ -119,7 +119,7 @@ static const struct omap4_ddr_config elpida2G_400M = {
 	.mr2		= 0x4
 };
 
-int sdram_init(void)
+static __init int omap4_sdram_init(void)
 {
 	writel(VA(DMM_BASE + DMM_LISA_MAP_0), 0x80720100);
 	writel(VA(DMM_BASE + DMM_LISA_MAP_2), 0x00000000);
@@ -131,3 +131,5 @@ int sdram_init(void)
 
 	return SDRAM_BASE + SDRAM_SIZE;
 }
+
+sdram_init(omap4_sdram_init);

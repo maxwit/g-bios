@@ -1,7 +1,8 @@
 #include <io.h>
+#include <init.h>
 #include <omap3.h>
 
-int soc_init(void)
+static __init int omap3_init(void)
 {
 	__u32 word;
 
@@ -119,10 +120,12 @@ int soc_init(void)
 	return 0;
 }
 
+plat_init(omap3_init);
+
 #define SDRC_READL(reg) readl(VA(SDRC_BASE + (reg)))
 #define SDRC_WRITEL(reg, word) writel(VA(SDRC_BASE + (reg)), (word))
 
-int sdram_init(void)
+static __init int omap3_sdram_init(void)
 {
 	int i;
 
@@ -161,3 +164,5 @@ int sdram_init(void)
 
 	return SDRAM_BASE + SDRAM_SIZE;
 }
+
+sdram_init(omap3_sdram_init);

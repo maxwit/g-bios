@@ -1,4 +1,5 @@
 #include <io.h>
+#include <init.h>
 #include <uart/uart.h>
 
 #define UART_READB(reg) \
@@ -24,7 +25,7 @@ __u32 uart_rxbuf_count()
 	return UART_READB(LSR_REG) & 0x1;
 }
 
-static int omap4_uart_init(void)
+static __init int omap4_uart_init(void)
 {
 	__u16 div = MHz(48) / 16 / 115200;
 
@@ -49,6 +50,7 @@ static int omap4_uart_init(void)
 	return 0;
 }
 
-DECLARE_UART_INIT(omap4_uart_init);
+stdio_init(omap4_uart_init);
+
 DECLARE_UART_SEND(omap4_uart_send_byte);
 DECLARE_UART_RECV(omap4_uart_recv_byte);

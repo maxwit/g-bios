@@ -1,5 +1,6 @@
 #include <io.h>
 #include <delay.h>
+#include <init.h>
 #include <uart/uart.h>
 
 static void e310_uart_send_byte(__u8 b)
@@ -22,6 +23,7 @@ static int e310_uart_init(void)
 	return 0;
 }
 
-DECLARE_UART_INIT(e310_uart_init);
+stdio_init(e310_uart_init);
+
 DECLARE_UART_SEND(e310_uart_send_byte);
 DECLARE_UART_RECV(e310_uart_recv_byte);

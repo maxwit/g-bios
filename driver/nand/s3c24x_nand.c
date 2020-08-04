@@ -1,6 +1,13 @@
 #include <io.h>
 #include <flash/nand.h>
+
+#if defined(CONFIG_S3C2410) || defined(CONFIG_S3C2440)
 #include <s3c24x.h>
+#elif defined(CONFIG_S3C6410)
+#include <s3c64x.h>
+#else
+#error
+#endif
 
 #define s3c24x_nfc_readl(reg) \
 	readl(VA(NAND_CTRL_BASE + reg))

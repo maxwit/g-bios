@@ -1,6 +1,6 @@
 #pragma once
 
-#include <arm/s3c6410_register.h>
+#include <s3c6410_register.h>
 
 #define SDRAM_BASE      0x50000000
 #define SDRAM_SIZE      0x04000000

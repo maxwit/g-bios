@@ -3,6 +3,7 @@
  */
 
 #include <io.h>
+#include <init.h>
 #include <uart/uart.h>
 #include <at91.h>
 
@@ -11,7 +12,7 @@
 #define at91_uart_writeb(reg, val)  writeb(VA(AT91SAM926X_PA_DBGU + reg), val)
 #define at91_uart_writel(reg, val)  writel(VA(AT91SAM926X_PA_DBGU + reg), val)
 
-static int at91_uart_init(void)
+static __init int at91_uart_init(void)
 {
 #ifdef CONFIG_AT91SAM9261
 	at91_gpio_conf_periA(PIOA, 3 << 9, 0);
@@ -48,7 +49,7 @@ __u32 uart_rxbuf_count(void)
 	return at91_uart_readl(US_CSR) & 0x1;
 }
 
-DECLARE_UART_INIT(at91_uart_init);
+stdio_init(at91_uart_init);
+
 DECLARE_UART_RECV(at91_uart_recv_byte);
 DECLARE_UART_SEND(at91_uart_send_byte);
-

@@ -4,9 +4,9 @@
 
 #include <at91.h>
 
-	.global  sdram_init
+	.global  at91_sdram_init
 
-sdram_init:
+at91_sdram_init:
 	stmfd sp!, {lr}
 #ifdef CONFIG_AT91SAM9261
 	ldr   r0, =AT91SAM926X_PA_MATRIX

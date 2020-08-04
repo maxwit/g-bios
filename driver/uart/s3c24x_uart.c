@@ -1,11 +1,12 @@
 #include <io.h>
 #include <delay.h>
+#include <init.h>
 #include <uart/uart.h>
 #include <s3c24x.h>
 
 #define UART_BASE(num) VA((UART0_BASE + (num) * 0x4000))
 
-static int s3c24x0_uart_init(void)
+static __init int s3c24x0_uart_init(void)
 {
 	int num;
 
@@ -59,6 +60,7 @@ __u32 uart_rxbuf_count(void)
 #endif
 }
 
-DECLARE_UART_INIT(s3c24x0_uart_init);
+stdio_init(s3c24x0_uart_init);
+
 DECLARE_UART_RECV(s3c24x0_uart_recv_byte);
 DECLARE_UART_SEND(s3c24x0_uart_send_byte);
