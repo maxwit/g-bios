@@ -6,3 +6,9 @@
 make <board>_defconfig
 make
 ```
+
+for example:
+```shell
+make armvirt_defconfig
+make
+```
