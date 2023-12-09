@@ -1,4 +1,7 @@
 #include <stdio.h>
+#ifdef CONFIG_UART
+#include <uart/uart.h>
+#endif
 
 #define BUF_LEN 32 // FIXME
 
