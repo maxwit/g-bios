@@ -30,20 +30,17 @@ static int nand_do_load(struct nand_chip *nand, __u32 nstart, void *mstart)
 	if (WITOS_MAGIC == readl(VA(mstart + WITOS_MAGIC_OFFSET))) {
 		load_size = readl(VA(mstart + WITOS_SIZE_OFFSET));
 #ifdef CONFIG_VERBOSE
-		printf("g-bios found.\n");
+		printf("WitOS detected.\n");
 #endif
 	} else {
 		load_size = CONFIG_OS_LOAD_SIZE;
-#ifdef CONFIG_VERBOSE
-		printf("g-bios NOT found, assuming 3rd-party bootloader.\n");
-#endif
 	}
 
 	last_page = curr_page + ((load_size - 1) >> wshift);
 
 #ifdef CONFIG_VERBOSE
-	printf("Nand loader: memory = 0x%x, nand = 0x%x, size = 0x%x\n",
-		mstart, nstart, load_size);
+	printf("Nand loader: memory = 0x%x, nand = 0x%x, size = 0x%x\n", mstart,
+		   nstart, load_size);
 #endif
 
 	while (++curr_page <= last_page)
@@ -55,7 +52,7 @@ static int nand_do_load(struct nand_chip *nand, __u32 nstart, void *mstart)
 static int nand_loader(struct loader_opt *opt)
 {
 	int ret;
-	struct nand_chip nand = {0}; // nand_chip must be initialized
+	struct nand_chip nand = { 0 }; // nand_chip must be initialized
 
 	ret = nand_init(&nand);
 	if (ret < 0)
