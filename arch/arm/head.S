@@ -46,8 +46,7 @@ handle_reset:
 	bne  hang
 
 	bl   main
-
-	b    hang
+	b    atexit
 
 #if 1
 handle_undef:
@@ -83,6 +82,9 @@ handle_fiq:
 	mov  r0, #'E'
 #endif
 
+atexit:
+	rsb  r0, r0, #'0'
+	b    hang
 hang:
 	bl   __io_putchar
 	sub  pc, pc, #8
