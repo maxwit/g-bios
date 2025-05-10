@@ -1,14 +1,16 @@
-<h1>A light-weight bootloader for IoT beginers</h1>
+<h1>g-bios: A light-weight bootloader</h1>
 
-# Build Steps
+# Build
 
 ```shell
-make BOARD_defconfig
+make <BOARD>_defconfig
 make
 ```
-please replace the BOARD_defconfig with a real defconfig name, for example:
+
+please replace the <BOARD>_defconfig with a real defconfig name, for example:
 ```shell
-make s3c6410_defconfig
+make armvirt_defconfig
 make
 ```
-check build/configs for all supported defconfig files.
+
+run `make help` for all supported defconfig files.
