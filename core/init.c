@@ -8,7 +8,6 @@
 #include <init.h>
 #include <uart/uart.h>
 
-#ifdef CONFIG_DEFAULT_LOADER
 extern struct loader_opt g_loader_begin[], g_loader_end[];
 
 static inline void boot(struct loader_opt *loader)
@@ -48,7 +47,6 @@ static int load_os(char key)
 
 	return 0;
 }
-#endif
 
 static const char __init_data banner[] = "\ng-bios " __GBIOS_VER__
 #ifdef CONFIG_VERBOSE
@@ -115,7 +113,7 @@ int main(void)
 	for (;;) {
 #endif
 
-#if 0
+#if 1
 		char key;
 
 		if (uart_rxbuf_count() > 0) {
