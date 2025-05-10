@@ -17,6 +17,10 @@ void __io_putchar(__u8 b)
 
 stdio_init(armvirt_uart_init);
 
+void uart_send_byte(__u8 b)
+{
+    writeb(VA(ARMVIRT_UART_BASE), b);
+}
 __u8 uart_recv_byte()
 {
     return readb(VA(ARMVIRT_UART_BASE));
