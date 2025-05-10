@@ -7,4 +7,4 @@ obj-$(CONFIG_UART_AT91)   += at91_uart.o
 obj-$(CONFIG_UART_OMAP3)  += omap3_uart.o
 obj-$(CONFIG_UART_OMAP4)  += omap4_uart.o
 obj-$(CONFIG_E310_UART)   += e310_uart.o
-obj-$(CONFIG_ARMVIRT_UART)   += armvirt_uart.o
+obj-$(CONFIG_PL011_UART)  += pl011_uart.o
