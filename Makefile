@@ -52,7 +52,7 @@ DEFCONFIG_LIST = $(shell ls build/configs)
 
 include build/rules/common.mk
 
-dir-y := arch/$(CONFIG_ARCH) board/$(CONFIG_PLAT) driver core lib
+dir-y := arch/$(CONFIG_ARCH) mcu/$(CONFIG_PLAT) driver core lib
 
 subdir-objs := $(foreach n, $(dir-y), $(n)/$(builtin-obj))
 
@@ -70,7 +70,7 @@ g-bios.hex: g-bios.elf
 	$(OBJCOPY) -O ihex -S $< $@
 
 g-bios.elf: $(subdir-objs)
-	$(LD) $(LDFLAGS) -T board/$(CONFIG_PLAT)/memory.ld -T build/sections.ld $^ -o $@
+	$(LD) $(LDFLAGS) -T mcu/$(CONFIG_PLAT)/memory.ld -T build/sections.ld $^ -o $@
 
 $(subdir-objs): $(dir-y)
 
@@ -87,7 +87,7 @@ help:
 
 # FIXME
 $(DEFCONFIG_LIST):
-	@echo "configure for board '$(@:%_defconfig=%)'"
+	@echo "configure for mcu '$(@:%_defconfig=%)'"
 #	@./build/generate/defconfig.py $@
 	@cp -v build/configs/$@ .config
 	@echo

@@ -2,9 +2,9 @@ include .config
 
 include build/rules/common.mk
 
-ifeq ($(path), $(filter $(path), board/$(CONFIG_PLAT) driver))
-	CFLAGS += -Iboard/$(CONFIG_PLAT)/include
-	ASFLAGS += -Iboard/$(CONFIG_PLAT)/include
+ifeq ($(path), $(filter $(path), mcu/$(CONFIG_PLAT) driver))
+	CFLAGS += -Imcu/$(CONFIG_PLAT)/include
+	ASFLAGS += -Imcu/$(CONFIG_PLAT)/include
 endif
 
 # path := $(patsubst %/,%,$(path))
