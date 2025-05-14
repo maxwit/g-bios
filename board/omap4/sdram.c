@@ -1,6 +1,7 @@
 #include <io.h>
 #include <delay.h>
 #include <init.h>
+#include <omap4.h>
 
 #define EMIF_READL(reg) \
 	readl(emif_base + (reg))

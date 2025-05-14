@@ -1,6 +1,7 @@
 #include <io.h>
 #include <delay.h>
 #include <flash/nand.h>
+#include <omap4.h>
 
 static int omap4_nand_ready(struct nand_chip *nand)
 {

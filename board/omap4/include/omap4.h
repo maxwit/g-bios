@@ -1,6 +1,6 @@
 #pragma once
 
-#include <arm/omap4_register.h>
+#include <omap4_register.h>
 
 #define KHz(n) (1000 * (n))
 #define MHz(n) (1000 * KHz(n))

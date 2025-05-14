@@ -1,6 +1,7 @@
 #include <io.h>
 #include <init.h>
 #include <uart/uart.h>
+#include <omap4.h>
 
 #define UART_READB(reg) \
 	readb(VA(UART_BASE + (reg)))

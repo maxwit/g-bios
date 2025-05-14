@@ -1,1 +1,1 @@
-obj-y = clock.o sdram.o
+obj-y = clock.o sdram.o delay.o

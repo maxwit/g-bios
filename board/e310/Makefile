@@ -1,1 +1,1 @@
-obj-y = led.o
+obj-y = led.o delay.o
