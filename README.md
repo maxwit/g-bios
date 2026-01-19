@@ -1,5 +1,8 @@
 <h1>g-bios: A light-weight bootloader</h1>
 
+# Features
+1. Support serial load
+
 # Build
 
 ```shell
